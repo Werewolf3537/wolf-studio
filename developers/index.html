@@ -15,10 +15,12 @@
     <!-- 1 БЛОК: ШАПКА САЙТА -->
     <header class="site-header">
         <div class="header-container">
-            <div class="header-logo-block">
+            <!-- Меняем div на тег a и убираем подчеркивание текста через style -->
+            <a href="../" class="header-logo-block" style="text-decoration: none;">
                 <img src="../img/logo.png" alt="Логотип" class="logo-img" onerror="this.src='img/logo.png'">
                 <span class="brand-name">Кирилл Бахарев</span>
-            </div>
+            </a>
+
             
             <nav class="header-nav">
                 <a href="#block2.1" class="nav-link">Экономия времени</a>
@@ -26,7 +28,7 @@
                 <a href="#block2.3" class="nav-link">Навигация</a>
                 <a href="#block2.4" class="nav-link">Мощный инструмент</a>
                 <a href="#block2.5" class="nav-link">Удобство</a>
-                <a href="#block2.5" class="nav-link">Стоимость</a>
+                <a href="#block2.6" class="nav-link">Стоимость</a>
             </nav>
 
             <div class="header-actions">
@@ -43,6 +45,36 @@
 
     <!-- ОТСТУП ПОД ШАПКУ НАПРЯМУЮ ЧЕРЕЗ КЛАСС, БЕЗ ЛИШНИХ ПОЛОС -->
     <main class="dev-main-content">
+
+
+
+
+<!-- Главный экран страницы для застройщиков -->
+<section class="hero-developers" style="padding: 60px 20px; text-align: center; background-color: #1a2026; font-family: sans-serif;">
+    <div style="max-width: 1200px; margin: 0 auto;">
+        
+        <!-- Новый главный заголовок H1 -->
+        <h1 style="font-size: 2.5rem; color: #FFFFFF; margin-bottom: 20px; font-weight: 700; line-height: 1.3;">
+            Интерактивные 3D-туры для застройщиков: <br>
+            <span style="color: #FFFFFF;">продавайте недвижимость на этапе котлована</span>
+        </h1>
+        
+        <!-- Контейнер, создающий зазор, внутри которого кнопки с твоим CSS-классом -->
+        <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 30px;">
+            <a href="https://zhk-mayakovsky.wolf-studio.ru/tip_10l" target="_blank" class="btn-contacts">ЖК "Маяковский"</a>
+            <a href="https://zhk-nakuznecova.wolf-studio.ru/tip_10l" target="_blank" class="btn-contacts">ЖК "Дом на Кузнецова</a>
+        </div>
+
+    </div>
+</section>
+
+
+
+
+
+
+
+
 
         <!-- 2.1 БЛОК: Экономия времени и ускорение сделки (Тёмный фон #14181d) -->
         <section id="block2.1" class="dev-section-split dark-bg">
