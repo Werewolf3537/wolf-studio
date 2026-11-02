@@ -216,6 +216,29 @@ html {
     margin: 0 auto;
 }
 
+/* Кнопка призыва к действию на главном экране */
+.btn-hero-cta {
+    display: inline-block;
+    margin-top: 40px; /* Отступ от текста */
+    background-color: #ff8562; /* Твой фирменный оранжевый */
+    color: #ffffff;
+    text-decoration: none;
+    padding: 16px 40px;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 6px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(255, 133, 98, 0.3);
+    transition: all 0.3s ease;
+}
+
+.btn-hero-cta:hover {
+    background-color: #e06e4c; /* Чуть темнее при наведении, как у остальных кнопок */
+    transform: translateY(-2px); /* Легкий интерактивный подъем */
+    box-shadow: 0 6px 20px rgba(255, 133, 98, 0.5);
+}
+
 /* ==========================================================================
    4. БЛОК: ОБО МНЕ
    ========================================================================== */
