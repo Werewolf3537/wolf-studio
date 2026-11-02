@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>3D-визуализация для застройщиков и девелоперов | Кирилл Бахарев</title>
-    <!-- 👇 Поднимаемся на уровень выше к общему файлу стилей -->
     <link rel="stylesheet" href="../style.css">
     <link rel="preconnect" href="https://googleapis.com">
     <link rel="preconnect" href="https://gstatic.com" crossorigin>
@@ -16,7 +15,6 @@
     <header class="site-header">
         <div class="header-container">
             <div class="header-logo-block">
-                <!-- Картинку логотипа тоже можно подтянуть из общего корня или положить в локальную img/ -->
                 <img src="../img/logo.png" alt="Логотип" class="logo-img" onerror="this.src='img/logo.png'">
                 <span class="brand-name">Кирилл Бахарев</span>
             </div>
@@ -25,17 +23,24 @@
                 <a href="#benefits" class="nav-link">Польза для продаж</a>
                 <a href="#technology" class="nav-link">Технологии</a>
                 <a href="#fears" class="nav-link">Работа с ТЗ</a>
-                <!-- 👇 Ссылка возвращает на главную страницу в корень сайта -->
                 <a href="../" class="nav-link nav-tour-link">← На главную</a>
             </nav>
 
             <div class="header-actions">
                 <a href="#contacts" class="btn-contacts">Обсудить проект</a>
             </div>
+
+            <!-- 👇 ДОБАВИЛИ КНОПКУ БУРГЕРА (Теперь она появится на телефонах) -->
+            <button class="menu-toggle" aria-label="Открыть меню">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </header>
 
-    <main style="padding-top: 90px; background-color: #14181d; color: #ffffff;">
+    <!-- 👇 ИСПРАВИЛИ: Убрали жесткий инлайновый padding, теперь отступ будет управляться через общий CSS плавно -->
+    <main class="dev-main-content">
         
         <!-- ГЛАВНЫЙ ЭКРАН СТРАНИЦЫ ЗАСТРОЙЩИКОВ -->
         <section class="dev-hero">
@@ -60,7 +65,6 @@
                     </div>
                     <div class="dev-col-img">
                         <div class="dev-img-wrapper">
-                            <!-- Картинки берутся из локальной папки developers/img/ -->
                             <img src="img/dev-1.jpg" alt="Инструмент продаж для менеджеров застройщика">
                         </div>
                     </div>
@@ -72,7 +76,7 @@
                         <span class="dev-tag">Маркетинг и Вау-эффект</span>
                         <h2>Технологично, современно и вовлекающе</h2>
                         <p>Современный покупатель избалован обычными рендерами. Интерактивность вовлекает человека в игровой процесс: он сам решает, куда пойти, какую деталь рассмотреть. Это увеличивает время контакта с вашим брендом на сайте и на презентациях в офисе.</p>
-                        <p>Объект запоминается как самый высокотехнологичный и надежный на рынке, выделяя вас среди конкурентов.</p>
+                        <p>Объект запоминается как самый высокотехнологичный и надежный на рынке, выделяя вас среди </p>
                     </div>
                     <div class="dev-col-img">
                         <div class="dev-img-wrapper">
@@ -113,11 +117,36 @@
                 <div class="footer-messengers">
                     <a href="https://t.me" target="_blank" class="footer-btn btn-tg"><span>Telegram</span></a>
                     <a href="https://wa.me" target="_blank" class="footer-btn btn-wa"><span>WhatsApp</span></a>
-                    <a href="https://max.ru/u/f9LHodD0cOKa7M2axwKT3jPzQ-QiKimcpIr7KFHmhdYVWxb_gKNwhKhZTfE" target="_blank" class="footer-btn btn-wa"><span>MAX</span></a>
+                    <a href="https://max.ru/u/f9LHodD0cOKa7M2axwKT3jPzQ-QiKimcpIr7KFHmhdYVWxb_gKNwhKhZTfE" target="_blank" class="footer-btn btn-wa"><span>
                 </div>
             </div>
         </div>
     </footer>
 
+    <!-- 👇 ДОБАВЛЯЕМ СКРИПТ: Чтобы бургер на мобилке физически открывался при тапе -->
+    <script>
+        const menuToggle = document.querySelector('.menu-toggle');
+        const headerNav = document.querySelector('.header-nav');
+        const headerActions = document.querySelector('.header-actions');
+
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            headerNav.classList.toggle('active');
+            headerActions.classList.toggle('active');
+        });
+
+        // Закрываем меню при клике на любую ссылку
+        document.querySelectorAll('.nav-link, .btn-contacts').forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.classList.remove('active');
+                headerNav.classList.remove('active');
+                headerActions.classList.remove('active');
+            });
+        });
+    </script>
+
 </body>
 </html>
+
+
+
