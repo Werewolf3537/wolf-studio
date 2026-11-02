@@ -493,7 +493,7 @@ html {
     position: relative;
     width: 100%;
     min-height: 450px;
-    background-image: url('img/background_contakt.jpg');
+    background-image: url('img/background_contakt.jpg'); /* Твой фон на месте */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -511,9 +511,8 @@ html {
 .footer-content {
     display: flex;
     flex-direction: column;
-    align-items: flex-start; /* Слева */
-    gap: 15px;
-    text-align: left;
+    align-items: flex-start; /* Всё строго по левому краю */
+    gap: 25px; /* Увеличили зазор между элементами */
     text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.8), 2px 2px 5px rgba(0, 0, 0, 0.9);
 }
 
@@ -523,7 +522,13 @@ html {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 2px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
+}
+
+.footer-contacts-text {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .footer-link {
@@ -538,145 +543,45 @@ html {
     color: #ff8562;
 }
 
-
-/* ==========================================================================
-   7.1 БЛОК СВЯЗИ И ФОРМЫ
-   ========================================================================== */
-.feedback-section {
-    background-color: #14181d;
-    padding: 120px 20px;
+/* Стили для кнопок мессенджеров */
+.footer-messengers {
     display: flex;
-    justify-content: center;
+    gap: 15px; /* Расстояние между кнопками */
+    margin-top: 10px;
 }
 
-.feedback-container {
-    max-width: 1100px;
-    width: 100%;
-}
-
-.feedback-subtitle {
-    color: rgba(255, 255, 255, 0.7);
-    text-align: center;
-    font-size: 16px;
-    margin-bottom: 50px;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.feedback-wrapper {
-    display: flex;
-    gap: 50px;
-    align-items: flex-start;
-}
-
-/* Стили формы */
-.feedback-form {
-    flex: 1;
-    background-color: #1a2026;
-    padding: 40px;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-}
-
-.form-group {
-    margin-bottom: 20px;
-}
-
-.feedback-form input, 
-.feedback-form textarea {
-    width: 100%;
-    padding: 15px;
-    background-color: #14181d;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 6px;
-    color: #ffffff;
-    font-family: inherit;
-    font-size: 15px;
-    transition: border-color 0.3s;
-}
-
-.feedback-form input:focus, 
-.feedback-form textarea:focus {
-    outline: none;
-    border-color: #ff8562;
-}
-
-.btn-submit {
-    width: 100%;
-    background-color: #ff8562;
-    color: #ffffff;
-    border: none;
-    padding: 16px;
-    font-size: 16px;
-    font-weight: 600;
-    border-radius: 6px;
-    cursor: pointer;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    transition: background-color 0.3s, transform 0.2s;
-}
-
-.btn-submit:hover {
-    background-color: #e06e4c;
-    transform: translateY(-1px);
-}
-
-/* Правая колонка с кнопками */
-.quick-contacts {
-    flex: 1;
-}
-
-.quick-contacts h3 {
-    color: #ffffff;
-    font-size: 22px;
-    margin-bottom: 25px;
-    font-weight: 600;
-}
-
-.contacts-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-}
-
-.contact-card {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 25px;
-    background-color: #1a2026;
-    border-radius: 8px;
+.footer-btn {
+    display: inline-block;
     color: #ffffff;
     text-decoration: none;
+    padding: 12px 30px;
+    font-size: 15px;
     font-weight: 600;
-    font-size: 16px;
+    border: 2px solid #ff8562; /* Твой фирменный оранжевый */
+    border-radius: 6px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
     transition: all 0.3s ease;
-    border: 1px solid transparent;
+    background-color: rgba(20, 24, 29, 0.5); /* Легкий темный фон для читаемости */
 }
 
-.contact-card:hover {
-    transform: translateY(-3px);
-    border-color: #ff8562;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+.footer-btn:hover {
+    background-color: #ff8562;
+    box-shadow: 0 5px 15px rgba(255, 133, 98, 0.3);
+    transform: translateY(-2px);
 }
 
-/* Мобильный адаптив для формы */
-@media (max-width: 850px) {
-    .feedback-wrapper {
-        flex-direction: column;
-        gap: 40px;
-    }
-    .quick-contacts {
+/* Корректный мобильный адаптив для новых кнопок */
+@media (max-width: 768px) {
+    .footer-messengers {
+        flex-direction: column; /* На мобилках кнопки встанут друг под друга */
         width: 100%;
     }
-}
-@media (max-width: 480px) {
-    .contacts-grid {
-        grid-template-columns: 1fr;
+    .footer-btn {
+        text-align: center;
+        width: 100%; /* Кнопки растянутся во всю ширину для удобного тапа пальцем */
     }
 }
-
 
 
 
