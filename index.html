@@ -58,6 +58,8 @@
         </div>
     </header>
 
+
+
     <!-- 2 БЛОК: ГЛАВНЫЙ ЭКРАН (HERO SECTION) -->
     <section class="hero-section">
         <div class="hero-content">
@@ -66,7 +68,7 @@
                 В работе ценю скорость, точность по вашему ТЗ и ответственность за результат. 
                 Создаю не просто статичные кадры — также к проекту я прилагаю интерактивный 3D-тур. 
                 Это дает уникальную возможность заказчикам полностью погрузиться в будущий объект со всех сторон.
-            <a href="#contacts" class="btn-hero-cta">Обсудить проект</a>
+            </p>
         </div>
     </section>
 
@@ -77,53 +79,49 @@
 
 
 
-        <!-- 3 БЛОК: ОБО МНЕ -->
-        <section id="about" class="about-section">
-            <div class="about-container">
-                
-                <h2 class="block-title">Обо мне</h2>
-                
-                <p class="about-text">
-                    Меня зовут Кирилл, я занимаюсь профессиональной 3D-визуализацией для дизайнеров интерьера, архитекторов и девелоперов. 
-                    <br><br>
-                    Моя задача — перевести ваши идеи, чертежи и мудборды в фотореалистичные кадры и интерактивные туры, которые помогут защитить проект перед заказчиком.
-                </p>
+<!-- 3 БЛОК: ОБО МНЕ -->
+<section id="about" class="about-section">
+    <div class="about-container">
+        <h2 class="block-title">Обо мне</h2>
+        <p class="about-text">
+            Меня зовут Кирилл, я занимаюсь профессиональной 3D-визуализации для дизайнеров интерьера, архитекторов и девелоперов.
+            Моя задача — перевести ваши идеи, чертежи и мудборды в фотореалистичные кадры и интерактивные туры, которые помогут защитить проект перед заказчиком.
+        </p>
 
-                <!-- Ключевые тезисы с твоими иконками -->
-                <div class="about-features">
-                    
-                    <!-- Тезис 1: Сроки -->
-                    <div class="feature-item">
-                        <div class="feature-icon-wrapper">
-                            <img src="img/time.png" alt="Сроки" class="about-feature-icon">
-                        </div>
-                        <h3 class="feature-title">Сроки</h3>
-                        <p class="feature-descr">Вы получаете качественный и предсказуемый результат точно вовремя.</p>
-                    </div>
-                    
-                    <!-- Тезис 2: Точность по ТЗ -->
-                    <div class="feature-item">
-                        <div class="feature-icon-wrapper">
-                            <img src="img/accuracy.png" alt="Точность" class="about-feature-icon">
-                        </div>
-                        <h3 class="feature-title">Точность по ТЗ</h3>
-                        <p class="feature-descr">Точно передаю пропорции, свет, объемы и заложенные материалы.</p>
-                    </div>
-                    
-                    <!-- Тезис 3: Интерактивность -->
-                    <div class="feature-item">
-                        <div class="feature-icon-wrapper">
-                            <img src="img/tour.png" alt="3D-тур" class="about-feature-icon">
-                        </div>
-                        <h3 class="feature-title">Интерактивность</h3>
-                        <p class="feature-descr">Даю возможность погрузиться в проект с помощью 3D-тура.</p>
-                    </div>
-                    
+        <!-- Ряд с преимуществами -->
+        <div class="about-features">
+            <div class="feature-item">
+                <div class="feature-icon-wrapper">
+                    <img src="img/icon-time.png" alt="Сроки" class="about-feature-icon">
                 </div>
-
+                <h3 class="feature-title">Сроки</h3>
+                <p class="feature-descr">Вы получаете качественный и предсказуемый результат точно вовремя.</p>
             </div>
-        </section>
 
+            <div class="feature-item">
+                <div class="feature-icon-wrapper">
+                    <img src="img/icon-target.png" alt="Точность по ТЗ" class="about-feature-icon">
+                </div>
+                <h3 class="feature-title">Точность по ТЗ</h3>
+                <p class="feature-descr">Точно передаю пропорции, свет, объемы и заложенные материалы.</p>
+            </div>
+
+            <div class="feature-item">
+                <div class="feature-icon-wrapper">
+                    <img src="img/icon-tour.png" alt="Интерактивность" class="about-feature-icon">
+                </div>
+                <h3 class="feature-title">Интерактивность</h3>
+                <p class="feature-descr">Даю возможность погрузиться в проект с помощью 3D-тура.</p>
+            </div>
+        </div>
+
+        <!-- 👇 ИСПРАВЛЕННЫЙ БЛОК: Кнопка вынесена из флекс-ряда -->
+        <div class="about-action-wrapper">
+            <a href="#feedback" class="btn-about-cta">Обсудить проект</a>
+        </div>
+
+    </div>
+</section>
 
 
         <!-- 4 БЛОК: 3D-ТУР -->
@@ -218,22 +216,62 @@
     </div>
 </section>
 
+<!-- 👇 ВСТАВИЛИ БЛОК ОБРАТНОЙ СВЯЗИ СЮДА -->
+<section id="feedback" class="feedback-section">
+    <div class="feedback-container">
+        <h2 class="block-title">Начать сотрудничество</h2>
+        <p class="feedback-subtitle">Оставьте заявку или свяжитесь со мной любым удобным способом — я рассчитаю стоимость и сроки вашего проекта.</p>
+        
+        <div class="feedback-wrapper">
+            <!-- Левая часть: Форма -->
+            <form class="feedback-form" action="#" method="POST">
+                <div class="form-group">
+                    <input type="text" name="name" placeholder="Ваше имя" required>
+                </div>
+                <div class="form-group">
+                    <input type="tel" name="phone" placeholder="Телефон или Telegram / WhatsApp" required>
+                </div>
+                <div class="form-group">
+                    <textarea name="message" placeholder="Расскажите кратко о проекте (опционально)" rows="4"></textarea>
+                </div>
+                <button type="submit" class="btn-submit">Отправить заявку</button>
+            </form>
 
-    </main> <!-- ЗАКРЫВАЕМ ОСНОВНОЙ КОНТЕНТ САЙТА -->
-
-
-
-    <!-- 6 БЛОК: ПОДВАЛ САЙТА (КОНТАКТЫ) -->
-    <!-- Фоновое изображение подгружается через стили CSS -->
-    <footer id="contacts" class="site-footer">
-        <div class="footer-container">
-            <div class="footer-content">
-                <h2 class="footer-title">Контакты</h2>
-                <a href="tel:+79059060419" class="footer-link">+7 (905) 906 04-19</a>
-                <a href="mailto:wolf-studio@bk.ru" class="footer-link">wolf-studio@bk.ru</a>
+            <!-- Правая часть: Быстрые контакты -->
+            <div class="quick-contacts">
+                <h3>Связаться напрямую:</h3>
+                <div class="contacts-grid">
+                    <a href="https://t.me" target="_blank" class="contact-card tg">
+                        <span>Telegram</span>
+                    </a>
+                    <a href="https://wa.me" target="_blank" class="contact-card wa">
+                        <span>WhatsApp</span>
+                    </a>
+                    <a href="tel:+79059060419" class="contact-card phone">
+                        <span>Позвонить</span>
+                    </a>
+                    <a href="mailto:wolf-studio@bk.ru" class="contact-card email">
+                        <span>E-mail</span>
+                    </a>
+                </div>
             </div>
         </div>
-    </footer>
+    </div>
+</section>
+
+</main> <!-- ЗАКРЫВАЕМ ОСНОВНОЙ КОНТЕНТ САЙТА -->
+
+<!-- 6 БЛОК: ПОДВАЛ САЙТА (КОНТАКТЫ) -->
+<!-- Фоновое изображение подгружается через стили CSS -->
+<footer id="contacts" class="site-footer">
+    <div class="footer-container">
+        <div class="footer-content">
+            <h2 class="footer-title">Контакты</h2>
+            <a href="tel:+79059060419" class="footer-link">+7 (905) 906 04-19</a>
+            <a href="mailto:wolf-studio@bk.ru" class="footer-link">wolf-studio@bk.ru</a>
+        </div>
+    </div>
+</footer>
 
 
 

@@ -216,28 +216,6 @@ html {
     margin: 0 auto;
 }
 
-/* Кнопка призыва к действию на главном экране */
-.btn-hero-cta {
-    display: inline-block;
-    margin-top: 40px; /* Отступ от текста */
-    background-color: #ff8562; /* Твой фирменный оранжевый */
-    color: #ffffff;
-    text-decoration: none;
-    padding: 16px 40px;
-    font-size: 18px;
-    font-weight: 600;
-    border-radius: 6px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    box-shadow: 0 4px 15px rgba(255, 133, 98, 0.3);
-    transition: all 0.3s ease;
-}
-
-.btn-hero-cta:hover {
-    background-color: #e06e4c; /* Чуть темнее при наведении, как у остальных кнопок */
-    transform: translateY(-2px); /* Легкий интерактивный подъем */
-    box-shadow: 0 6px 20px rgba(255, 133, 98, 0.5);
-}
 
 /* ==========================================================================
    4. БЛОК: ОБО МНЕ
@@ -314,6 +292,37 @@ html {
     font-size: 15px;
     line-height: 1.5;
 }
+
+/* Контейнер для кнопки "Обсудить проект" под карточками */
+.about-action-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center; /* Выравнивает строго по центру */
+    margin-top: 50px; /* Отступ сверху от контейнеров */
+}
+
+/* Кнопка в стиле "Больше туров" */
+.btn-about-cta {
+    display: inline-block;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 14px 40px;
+    font-size: 16px;
+    font-weight: 600;
+    border: 2px solid #ff8562;
+    border-radius: 6px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+.btn-about-cta:hover {
+    background-color: #ff8562;
+    box-shadow: 0 5px 15px rgba(255, 133, 98, 0.3);
+    transform: translateY(-2px);
+}
+
+
 
 /* ==========================================================================
    5. БЛОК: 3D-ТУР (НА ГЛАВНОЙ СТРАНИЦЕ)
@@ -528,6 +537,148 @@ html {
 .footer-link:hover {
     color: #ff8562;
 }
+
+
+/* ==========================================================================
+   7.1 БЛОК СВЯЗИ И ФОРМЫ
+   ========================================================================== */
+.feedback-section {
+    background-color: #14181d;
+    padding: 120px 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.feedback-container {
+    max-width: 1100px;
+    width: 100%;
+}
+
+.feedback-subtitle {
+    color: rgba(255, 255, 255, 0.7);
+    text-align: center;
+    font-size: 16px;
+    margin-bottom: 50px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.feedback-wrapper {
+    display: flex;
+    gap: 50px;
+    align-items: flex-start;
+}
+
+/* Стили формы */
+.feedback-form {
+    flex: 1;
+    background-color: #1a2026;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.feedback-form input, 
+.feedback-form textarea {
+    width: 100%;
+    padding: 15px;
+    background-color: #14181d;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 15px;
+    transition: border-color 0.3s;
+}
+
+.feedback-form input:focus, 
+.feedback-form textarea:focus {
+    outline: none;
+    border-color: #ff8562;
+}
+
+.btn-submit {
+    width: 100%;
+    background-color: #ff8562;
+    color: #ffffff;
+    border: none;
+    padding: 16px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-submit:hover {
+    background-color: #e06e4c;
+    transform: translateY(-1px);
+}
+
+/* Правая колонка с кнопками */
+.quick-contacts {
+    flex: 1;
+}
+
+.quick-contacts h3 {
+    color: #ffffff;
+    font-size: 22px;
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+
+.contacts-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.contact-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 25px;
+    background-color: #1a2026;
+    border-radius: 8px;
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+}
+
+.contact-card:hover {
+    transform: translateY(-3px);
+    border-color: #ff8562;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Мобильный адаптив для формы */
+@media (max-width: 850px) {
+    .feedback-wrapper {
+        flex-direction: column;
+        gap: 40px;
+    }
+    .quick-contacts {
+        width: 100%;
+    }
+}
+@media (max-width: 480px) {
+    .contacts-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+
 
 /* ==========================================================================
    8. БЛОК: ГАЛЕРЕЯ (АСИММЕТРИЧНАЯ СЕТКА)
