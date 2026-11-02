@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D-визуализация для застройщиков и девелоперов | Кирилл Бахарев</title>
+    <!-- 👇 Поднимаемся на уровень выше к общему файлу стилей -->
+    <link rel="stylesheet" href="../style.css">
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- ШАПКА САЙТА -->
+    <header class="site-header">
+        <div class="header-container">
+            <div class="header-logo-block">
+                <!-- Картинку логотипа тоже можно подтянуть из общего корня или положить в локальную img/ -->
+                <img src="../img/logo.png" alt="Логотип" class="logo-img" onerror="this.src='img/logo.png'">
+                <span class="brand-name">Кирилл Бахарев</span>
+            </div>
+            
+            <nav class="header-nav">
+                <a href="#benefits" class="nav-link">Польза для продаж</a>
+                <a href="#technology" class="nav-link">Технологии</a>
+                <a href="#fears" class="nav-link">Работа с ТЗ</a>
+                <!-- 👇 Ссылка возвращает на главную страницу в корень сайта -->
+                <a href="../" class="nav-link nav-tour-link">← На главную</a>
+            </nav>
+
+            <div class="header-actions">
+                <a href="#contacts" class="btn-contacts">Обсудить проект</a>
+            </div>
+        </div>
+    </header>
+
+    <main style="padding-top: 90px; background-color: #14181d; color: #ffffff;">
+        
+        <!-- ГЛАВНЫЙ ЭКРАН СТРАНИЦЫ ЗАСТРОЙЩИКОВ -->
+        <section class="dev-hero">
+            <div class="dev-hero-content">
+                <h1 class="dev-hero-title">Интерактивные 3D-туры для девелоперов: продавайте недвижимость до этапа котлована</h1>
+                <p class="dev-hero-subtitle">Передовые технологии визуализации, которые превращают чертежи в главный инструмент продаж вашего performance-маркетинга.</p>
+                <a href="#contacts" class="btn-about-cta" style="margin-top: 30px;">Внедрить в отдел продаж</a>
+            </div>
+        </section>
+
+        <!-- БЛОК С ЧЕРЕДОВАНИЕМ (ШАХМАТКА) -->
+        <section class="dev-features-section">
+            <div class="dev-features-container">
+                
+                <!-- Блок 1: Слева текст, справа картинка -->
+                <div class="dev-row" id="benefits">
+                    <div class="dev-col-text">
+                        <span class="dev-tag">Инструмент продаж</span>
+                        <h2>Мощный аргумент для вашего отдела продаж</h2>
+                        <p>Менеджерам больше не нужно объяснять планировку «на пальцах» или показывать серые чертежи. Интерактивный 3D-тур позволяет клиенту совершить виртуальную прогулку по будущему жилому комплексу, оценить масштаб, эргономику комнат и вид из окна еще до заливки фундамента.</p>
+                        <p>Это снимает главный барьер неопределенности и ускоряет принятие решения о покупке.</p>
+                    </div>
+                    <div class="dev-col-img">
+                        <div class="dev-img-wrapper">
+                            <!-- Картинки берутся из локальной папки developers/img/ -->
+                            <img src="img/dev-1.jpg" alt="Инструмент продаж для менеджеров застройщика">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Блок 2: Справа текст, слева картинка -->
+                <div class="dev-row reverse" id="technology">
+                    <div class="dev-col-text">
+                        <span class="dev-tag">Маркетинг и Вау-эффект</span>
+                        <h2>Технологично, современно и вовлекающе</h2>
+                        <p>Современный покупатель избалован обычными рендерами. Интерактивность вовлекает человека в игровой процесс: он сам решает, куда пойти, какую деталь рассмотреть. Это увеличивает время контакта с вашим брендом на сайте и на презентациях в офисе.</p>
+                        <p>Объект запоминается как самый высокотехнологичный и надежный на рынке, выделяя вас среди конкурентов.</p>
+                    </div>
+                    <div class="dev-col-img">
+                        <div class="dev-img-wrapper">
+                            <img src="img/dev-2.jpg" alt="Современные технологии 3D туров для девелоперов">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Блок 3: Слева текст, справа картинка -->
+                <div class="dev-row" id="fears">
+                    <div class="dev-col-text">
+                        <span class="dev-tag">Надежность и Точность</span>
+                        <h2>Никаких страхов: строгая точность по ТЗ и предсказуемые сроки</h2>
+                        <p>Мы понимаем цену сорванных дедлайнов в строительном маркетинге. Работа ведется в строгом соответствии с вашими архитектурными чертежами, генеральным планом и заложенными материалами.</p>
+                        <p>Вы получаете полную прозрачность на каждом этапе согласования, предсказуемый результат и фотореалистичное качество, которое полностью совпадет с финальной реализацией объекта.</p>
+                    </div>
+                    <div class="dev-col-img">
+                        <div class="dev-img-wrapper">
+                            <img src="img/dev-3.jpg" alt="Точность 3D визуализации по техническому заданию">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ПОДВАЛ САЙТА -->
+    <footer id="contacts" class="site-footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <h2 class="footer-title">Контакты</h2>
+                <div class="footer-contacts-text">
+                    <a href="tel:+79059060419" class="footer-link">+7 (905) 906 04-19</a>
+                    <a href="mailto:wolf-studio@bk.ru" class="footer-link">wolf-studio@bk.ru</a>
+                </div>
+                <div class="footer-messengers">
+                    <a href="https://t.me" target="_blank" class="footer-btn btn-tg"><span>Telegram</span></a>
+                    <a href="https://wa.me" target="_blank" class="footer-btn btn-wa"><span>WhatsApp</span></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

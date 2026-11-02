@@ -586,9 +586,8 @@ html {
 
 
 /* ==========================================================================
-   8. БЛОК: ГАЛЕРЕЯ (АСИММЕТРИЧНАЯ СЕТКА)
+   8. БЛОК: ГАЛЕРЕЯ (ДЕСТКТОПНАЯ АСИММЕТРИЧНАЯ СЕТКА)
    ========================================================================== */
-/* 👇 ТВОЙ НОВЫЙ КОД ГАЛЕРЕИ СТАВИМ ИМЕННО СЮДА */
 .gallery-section {
     background-color: #14181d;
     padding: 120px 20px;
@@ -662,26 +661,168 @@ html {
     box-shadow: 0 5px 15px rgba(255, 133, 98, 0.3);
 }
 
+/* ==========================================================================
+   9. СТИЛИ ДЛЯ ОТДЕЛЬНОЙ СТРАНИЦЫ ГАЛЕРЕИ (ИНТЕРЬЕРЫ / ЭКСТЕРЬЕРЫ - ДЕСКТОП)
+   ========================================================================== */
+.gallery-page-container {
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+.gallery-page-block {
+    margin-bottom: 80px; 
+    scroll-margin-top: 110px; 
+}
+.gallery-block-subtitle {
+    color: #ffffff;
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 30px;
+    border-left: 4px solid #ff8562; 
+    padding-left: 15px;
+}
+.gallery-page-item {
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+    background-color: #1a2026;
+    transition: transform 0.3s ease;
+}
+.gallery-page-item:hover {
+    transform: translateY(-3px);
+}
+.gallery-page-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.gallery-grid-vertical {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+.gallery-grid-vertical .gallery-page-item {
+    aspect-ratio: 9 / 14; 
+}
+.gallery-grid-horizontal {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+}
+.gallery-grid-horizontal .gallery-page-item {
+    aspect-ratio: 16 / 10; 
+}
 
 /* ==========================================================================
-   9. АДАПТИВНОСТЬ ДЛЯ СРЕДНИХ ЭКРАНОВ И ПЛАНШЕТОВ (ДО 1024px / 992px)
+   10. СТИЛИ ДЛЯ СТРАНИЦЫ ЗАСТРОЙЩИКОВ (DEVELOPERS - ДЕСКТОП)
+   ========================================================================= */
+.dev-hero {
+    padding: 160px 20px 100px 20px;
+    text-align: center;
+    background: linear-gradient(rgba(20, 24, 29, 0.85), rgba(20, 24, 29, 0.95)), url('img/hero-background.jpg');
+    background-size: cover;
+    background-position: center;
+}
+.dev-hero-content {
+    max-width: 900px;
+    margin: 0 auto;
+}
+.dev-hero-title {
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 25px;
+    text-transform: uppercase;
+}
+.dev-hero-subtitle {
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+}
+.dev-features-section {
+    padding: 100px 20px;
+}
+.dev-features-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 120px; 
+}
+.dev-row {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+}
+.dev-row.reverse {
+    flex-direction: row-reverse;
+}
+.dev-col-text {
+    flex: 1;
+}
+.dev-tag {
+    display: inline-block;
+    color: #ff8562;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+}
+.dev-col-text h2 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 25px;
+    color: #ffffff;
+    line-height: 1.3;
+}
+.dev-col-text p {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.75);
+    line-height: 1.7;
+    margin-bottom: 15px;
+}
+.dev-col-img {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+.dev-img-wrapper {
+    width: 100%;
+    max-width: 500px; 
+    aspect-ratio: 1 / 1; 
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+}
+.dev-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+.dev-img-wrapper:hover img {
+    transform: scale(1.02);
+}
+
+
+/* ==========================================================================
+   11. АДАПТИВНОСТЬ ДЛЯ СРЕДНИХ ЭКРАНОВ И ПЛАНШЕТОВ (ДО 1024px / 992px)
    ========================================================================== */
 @media (max-width: 1024px) {
     .tour-grid-page {
-        grid-template-columns: repeat(2, 1fr); /* 2 колонки туров на планшетах */
+        grid-template-columns: repeat(2, 1fr); 
     }
 }
 
 @media (max-width: 992px) {
-    /* Показываем бургер-меню */
     .menu-toggle {
         display: flex;
     }
-    
-    /* Выпадающая шторка меню на смартфонах */
-    /* Выпадающая шторка меню на смартфонах */
     .header-nav {
-        position: fixed; /* Возвращаем fixed для мобильной шторки */
+        position: fixed; 
         top: 0;
         right: -100%;
         width: 70%;
@@ -695,19 +836,14 @@ html {
         transition: right 0.4s ease;
         padding: 0;
         z-index: 1000;
-        transform: none !important; /* Отменяем сдвиг, который мы писали для ПК */
+        transform: none !important; 
     }
-
-    /* Сбрасываем гигантский отступ у ссылки туров на мобилках, чтобы в шторке всё было ровно */
     .nav-tour-link {
         margin-left: 0 !important;
     }
-
-
-    /* Кнопка "Контакты" и соцсети встают аккуратно под ссылки */
     .header-actions {
         position: fixed;
-        top: calc(50% + 140px); /* Идеальное положение ровно под ссылками на одном экране */
+        top: calc(50% + 140px); 
         right: -100%;
         width: 70%;
         display: flex;
@@ -717,21 +853,28 @@ html {
         z-index: 1001;
         align-items: center;
     }
-
-    /* При активации бургера — выдвигаем шторку */
     .header-nav.active,
     .header-actions.active {
         right: 0;
     }
-
-    /* Анимация превращения бургера в крестик */
     .menu-toggle.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
     .menu-toggle.active span:nth-child(2) { opacity: 0; }
     .menu-toggle.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
 
-    /* Корректируем шрифты на главном экране */
     .hero-title { font-size: 38px; }
     .hero-subtitle { font-size: 18px; }
+
+    /* Общий адаптив для застройщиков (Планшеты) */
+    .dev-row, .dev-row.reverse {
+        flex-direction: column; 
+        gap: 40px;
+    }
+    .dev-col-text h2 {
+        font-size: 26px;
+    }
+    .dev-hero-title {
+        font-size: 30px;
+    }
 }
 
 @media (max-width: 850px) {
@@ -745,147 +888,72 @@ html {
 }
 
 /* ==========================================================================
-   10. СТИЛИ ДЛЯ ОТДЕЛЬНОЙ СТРАНИЦЫ ГАЛЕРЕИ (ИНТЕРЬЕРЫ / ЭКСТЕРЬЕРЫ)
-   ========================================================================== */
-.gallery-page-container {
-    max-width: 1200px;
-    width: 100%;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-/* Разделы внутри страницы (Интерьеры, Экстерьеры...) */
-.gallery-page-block {
-    margin-bottom: 80px; /* Отступ между блоками категорий */
-    
-    /* 👇 ДОБАВЛЯЕМ СЮДА: Отступ для плавной прокрутки */
-    scroll-margin-top: 110px; /* Высота шапки (90px) + 20px красивого свободного зазора */
-}
-
-/* Подзаголовки категорий */
-.gallery-block-subtitle {
-    color: #ffffff;
-    font-size: 28px;
-    font-weight: 600;
-    margin-bottom: 30px;
-    border-left: 4px solid #ff8562; /* Твой фирменный оранжевый акцент слева от названия */
-    padding-left: 15px;
-}
-
-/* Элемент плитки */
-.gallery-page-item {
-    overflow: hidden;
-    border-radius: 8px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
-    background-color: #1a2026;
-    transition: transform 0.3s ease;
-}
-
-.gallery-page-item:hover {
-    transform: translateY(-3px);
-}
-
-.gallery-page-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
-
-/* Сетка 1: Для вертикальных рендеров (Интерьеры) — 3 в ряд */
-.gallery-grid-vertical {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
-}
-.gallery-grid-vertical .gallery-page-item {
-    aspect-ratio: 9 / 14; /* Четкие вертикальные пропорции */
-}
-
-/* Сетка 2: Для горизонтальных рендеров (Экстерьеры / Мысли) — 2 в ряд */
-.gallery-grid-horizontal {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 30px;
-}
-.gallery-grid-horizontal .gallery-page-item {
-    aspect-ratio: 16 / 10; /* Красивые горизонтальные пропорции */
-}
-
-
-/* ==========================================================================
-   11. ЕДИНЫЙ МОБИЛЬНЫЙ АДАПТИВ ДЛЯ СМАРТФОНОВ (ДО 768px)
+   12. ЕДИНЫЙ МОБИЛЬНЫЙ АДАПТИВ ДЛЯ СМАРТФОНОВ (ДО 768px / 576px / 480px)
    ========================================================================== */
 @media (max-width: 768px) {
-    /* Фиксируем высоту компактной шапки */
     .site-header { height: 72px !important; }
     .logo-img { height: 44px !important; }
     .brand-name { font-size: 18px !important; }
 
-    /* Возвращаем классическое выравнивание по краям (Лого слева, бургер справа) */
     .site-header .header-container {
         justify-content: space-between !important; 
         gap: 15px !important; 
     }
-
-    /* Уменьшаем кнопку "На главную" на второй странице и прижимаем её вправо */
     .site-header .btn-contacts[href="../"] {
         padding: 6px 12px !important; 
         font-size: 13px !important;    
-        margin-left: auto !important; /* Удерживает кнопку справа */
+        margin-left: auto !important; 
     }
 
-    /* Адаптив плитки туров */
     .tour-grid-page { grid-template-columns: 1fr; }
     .tour-grid-page .tour-image-box { max-width: 100%; }
 
-    /* Мобильный подвал с фоновым рендером */
     .site-footer { min-height: 350px !important; background-position: calc(50% + 50px) center !important; }
     .footer-container { padding: 0 30px !important; }
     .footer-title { font-size: 32px !important; }
     .footer-link { font-size: 18px !important; }
 
-    /* Мобильный адаптив для сложной асимметричной галереи */
     .gallery-row-mixed {
-        flex-direction: column; /* Разворачиваем верхний ряд вертикально */
+        flex-direction: column; 
         gap: 20px;
     }
     .gallery-row-verticals {
-        grid-template-columns: 1fr; /* Нижний ряд превращаем в 1CommandLine */
+        grid-template-columns: 1fr; 
         gap: 20px;
         margin-top: 20px;
     }
     .gallery-row-mixed .item-vertical,
     .gallery-row-verticals .gallery-item {
-        aspect-ratio: 4 / 5; /* Делаем фото на смартфонах чуть более квадратными */
+        aspect-ratio: 4 / 5; 
     }
 
-    /* Адаптив сеток на отдельной странице галереи */
     .gallery-grid-vertical,
     .gallery-grid-horizontal {
-        grid-template-columns: 1fr !important; /* Всё выстраивается по 1 в ряд */
+        grid-template-columns: 1fr !important; 
         gap: 20px;
     }
 
-
-    /* 👇 ТВОЁ ИСПРАВЛЕНИЕ: Возвращаем шторку бургер-меню главной страницы на место */
     .site-header .header-nav {
         position: fixed !important; 
         left: auto !important;     
         transform: none !important; 
     }
-
-    /* На главной странице в шторке ссылки должны быть видны */
     .site-header:has(.menu-toggle) .header-nav {
         display: flex !important;
     }
-
-    /* Сбрасываем десктопный отступ у ссылки туров в мобильной шторке */
     .nav-tour-link {
         margin-left: 0 !important;
     }
-}
 
+    .footer-messengers {
+        flex-direction: column; 
+        width: 100%;
+    }
+    .footer-btn {
+        text-align: center;
+        width: 100%; 
+    }
+}
 
 @media (max-width: 576px) {
     .hero-title { font-size: 28px; margin-bottom: 20px; }
