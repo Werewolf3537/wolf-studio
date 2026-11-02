@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D-визуализация для застройщиков и девелоперов | Кирилл Бахарев</title>
+    <title>Для застройщиков | Кирилл Бахарев</title>
     <link rel="stylesheet" href="../style.css">
     <link rel="preconnect" href="https://googleapis.com">
     <link rel="preconnect" href="https://gstatic.com" crossorigin>
@@ -11,7 +11,7 @@
 </head>
 <body>
 
-    <!-- ШАПКА САЙТА -->
+    <!-- 1 БЛОК: ШАПКА САЙТА -->
     <header class="site-header">
         <div class="header-container">
             <div class="header-logo-block">
@@ -20,9 +20,8 @@
             </div>
             
             <nav class="header-nav">
-                <a href="#benefits" class="nav-link">Польза для продаж</a>
-                <a href="#technology" class="nav-link">Технологии</a>
-                <a href="#fears" class="nav-link">Работа с ТЗ</a>
+                <a href="#about-dev" class="nav-link">Зачем нужен тур</a>
+                <a href="#tour-dev" class="nav-link">Инструмент продаж</a>
                 <a href="../" class="nav-link nav-tour-link">← На главную</a>
             </nav>
 
@@ -30,7 +29,6 @@
                 <a href="#contacts" class="btn-contacts">Обсудить проект</a>
             </div>
 
-            <!-- 👇 ДОБАВИЛИ КНОПКУ БУРГЕРА (Теперь она появится на телефонах) -->
             <button class="menu-toggle" aria-label="Открыть меню">
                 <span></span>
                 <span></span>
@@ -39,73 +37,50 @@
         </div>
     </header>
 
-    <!-- 👇 ИСПРАВИЛИ: Убрали жесткий инлайновый padding, теперь отступ будет управляться через общий CSS плавно -->
+    <!-- ОТСТУП ПОД ШАПКУ НАПРЯМУЮ ЧЕРЕЗ КЛАСС, БЕЗ ЛИШНИХ ПОЛОС -->
     <main class="dev-main-content">
-        
-        <!-- ГЛАВНЫЙ ЭКРАН СТРАНИЦЫ ЗАСТРОЙЩИКОВ -->
-        <section class="dev-hero">
-            <div class="dev-hero-content">
-                <h1 class="dev-hero-title">Интерактивные 3D-туры для девелоперов: продавайте недвижимость до этапа котлована</h1>
-                <p class="dev-hero-subtitle">Передовые технологии визуализации, которые превращают чертежи в главный инструмент продаж вашего performance-маркетинга.</p>
-                <a href="#contacts" class="btn-about-cta" style="margin-top: 30px;">Внедрить в отдел продаж</a>
+
+        <!-- 2 БЛОК: ЗАЧЕМ НУЖЕН 3D-ТУР (Тёмный фон #14181d) -->
+        <section id="about-dev" class="dev-section-split dark-bg">
+            <div class="dev-split-container">
+                <!-- Левая часть: текст -->
+                <div class="dev-split-text-col">
+                    <h2 class="dev-split-title">Зачем нужен 3D-тур?</h2>
+                    <p class="dev-split-descr">
+                        Интерактивный 3D-тур дает уникальную возможность вашим заказчикам полностью погрузиться в будущий объект со всех сторон еще до начала строительства. Это современный и технологичный способ презентации, который наглядно показывает планировку, эргономику комнат и масштаб будущих объектов.
+                    </p>
+                </div>
+                <!-- Правая часть: картинка -->
+                <div class="dev-split-img-col">
+                    <div class="dev-square-img-box">
+                        <img src="img/dev-about.jpg" alt="Зачем нужен 3D-тур для застройщика">
+                    </div>
+                </div>
             </div>
         </section>
 
-        <!-- БЛОК С ЧЕРЕДОВАНИЕМ (ШАХМАТКА) -->
-        <section class="dev-features-section">
-            <div class="dev-features-container">
-                
-                <!-- Блок 1: Слева текст, справа картинка -->
-                <div class="dev-row" id="benefits">
-                    <div class="dev-col-text">
-                        <span class="dev-tag">Инструмент продаж</span>
-                        <h2>Мощный аргумент для вашего отдела продаж</h2>
-                        <p>Менеджерам больше не нужно объяснять планировку «на пальцах» или показывать серые чертежи. Интерактивный 3D-тур позволяет клиенту совершить виртуальную прогулку по будущему жилому комплексу, оценить масштаб, эргономику комнат и вид из окна еще до заливки фундамента.</p>
-                        <p>Это снимает главный барьер неопределенности и ускоряет принятие решения о покупке.</p>
-                    </div>
-                    <div class="dev-col-img">
-                        <div class="dev-img-wrapper">
-                            <img src="img/dev-1.jpg" alt="Инструмент продаж для менеджеров застройщика">
-                        </div>
+        <!-- 3 БЛОК: ИНСТРУМЕНТ ПРОДАЖ (Тёмно-серый фон #1a2026, картинка и текст меняются местами) -->
+        <section id="tour-dev" class="dev-section-split gray-bg">
+            <div class="dev-split-container row-reversed">
+                <!-- Текст (на ПК будет справа) -->
+                <div class="dev-split-text-col">
+                    <h2 class="dev-split-title">Инструмент продаж</h2>
+                    <p class="dev-split-descr">
+                        Для менеджеров это незаменимый инструмент, который помогает наглядно объяснить сложные узлы примыкания материалов, расстановку мебели и архитектурную концепцию. Покупатели видят не просто статичные плоские чертежи, а готовый продукт, что снимает любые страхи и возражения перед покупкой.
+                    </p>
+                </div>
+                <!-- Картинка (на ПК будет слева) -->
+                <div class="dev-split-img-col">
+                    <div class="dev-square-img-box">
+                        <img src="img/dev-tour.jpg" alt="3D-тур как инструмент продаж">
                     </div>
                 </div>
-
-                <!-- Блок 2: Справа текст, слева картинка -->
-                <div class="dev-row reverse" id="technology">
-                    <div class="dev-col-text">
-                        <span class="dev-tag">Маркетинг и Вау-эффект</span>
-                        <h2>Технологично, современно и вовлекающе</h2>
-                        <p>Современный покупатель избалован обычными рендерами. Интерактивность вовлекает человека в игровой процесс: он сам решает, куда пойти, какую деталь рассмотреть. Это увеличивает время контакта с вашим брендом на сайте и на презентациях в офисе.</p>
-                        <p>Объект запоминается как самый высокотехнологичный и надежный на рынке, выделяя вас среди </p>
-                    </div>
-                    <div class="dev-col-img">
-                        <div class="dev-img-wrapper">
-                            <img src="img/dev-2.jpg" alt="Современные технологии 3D туров для девелоперов">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Блок 3: Слева текст, справа картинка -->
-                <div class="dev-row" id="fears">
-                    <div class="dev-col-text">
-                        <span class="dev-tag">Надежность и Точность</span>
-                        <h2>Никаких страхов: строгая точность по ТЗ и предсказуемые сроки</h2>
-                        <p>Мы понимаем цену сорванных дедлайнов в строительном маркетинге. Работа ведется в строгом соответствии с вашими архитектурными чертежами, генеральным планом и заложенными материалами.</p>
-                        <p>Вы получаете полную прозрачность на каждом этапе согласования, предсказуемый результат и фотореалистичное качество, которое полностью совпадет с финальной реализацией объекта.</p>
-                    </div>
-                    <div class="dev-col-img">
-                        <div class="dev-img-wrapper">
-                            <img src="img/dev-3.jpg" alt="Точность 3D визуализации по техническому заданию">
-                        </div>
-                    </div>
-                </div>
-
             </div>
         </section>
 
     </main>
 
-    <!-- ПОДВАЛ САЙТА -->
+    <!-- 4 БЛОК: ПОДВАЛ САЙТА (КОНТАКТЫ) -->
     <footer id="contacts" class="site-footer">
         <div class="footer-container">
             <div class="footer-content">
@@ -117,13 +92,12 @@
                 <div class="footer-messengers">
                     <a href="https://t.me" target="_blank" class="footer-btn btn-tg"><span>Telegram</span></a>
                     <a href="https://wa.me" target="_blank" class="footer-btn btn-wa"><span>WhatsApp</span></a>
-                    <a href="https://max.ru/u/f9LHodD0cOKa7M2axwKT3jPzQ-QiKimcpIr7KFHmhdYVWxb_gKNwhKhZTfE" target="_blank" class="footer-btn btn-wa"><span>
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- 👇 ДОБАВЛЯЕМ СКРИПТ: Чтобы бургер на мобилке физически открывался при тапе -->
+    <!-- СКРИПТ РАБОТЫ МОБИЛЬНОГО БУРГЕРА -->
     <script>
         const menuToggle = document.querySelector('.menu-toggle');
         const headerNav = document.querySelector('.header-nav');
@@ -135,7 +109,6 @@
             headerActions.classList.toggle('active');
         });
 
-        // Закрываем меню при клике на любую ссылку
         document.querySelectorAll('.nav-link, .btn-contacts').forEach(link => {
             link.addEventListener('click', () => {
                 menuToggle.classList.remove('active');
@@ -147,6 +120,3 @@
 
 </body>
 </html>
-
-
-

@@ -715,104 +715,86 @@ html {
     aspect-ratio: 16 / 10; 
 }
 
+
+
 /* ==========================================================================
    10. СТИЛИ ДЛЯ СТРАНИЦЫ ЗАСТРОЙЩИКОВ (DEVELOPERS - ДЕСКТОП)
    ========================================================================= */
-.dev-hero {
-    padding: 160px 20px 100px 20px;
-    text-align: center;
-    background: linear-gradient(rgba(20, 24, 29, 0.85), rgba(20, 24, 29, 0.95)), url('img/hero-background.jpg');
-    background-size: cover;
-    background-position: center;
+
+.dev-main-content {
+    padding-top: 90px; /* Отступ под шапку */
+    background-color: #14181d;
 }
-.dev-hero-content {
-    max-width: 900px;
-    margin: 0 auto;
-}
-.dev-hero-title {
-    font-size: 42px;
-    font-weight: 700;
-    line-height: 1.3;
-    margin-bottom: 25px;
-    text-transform: uppercase;
-}
-.dev-hero-subtitle {
-    font-size: 18px;
-    color: rgba(255, 255, 255, 0.7);
-    line-height: 1.6;
-}
-.dev-features-section {
-    padding: 100px 20px;
-}
-.dev-features-container {
-    max-width: 1200px;
-    margin: 0 auto;
+
+/* Базовый блок деления */
+.dev-section-split {
+    padding: 120px 20px;
     display: flex;
-    flex-direction: column;
-    gap: 120px; 
+    justify-content: center;
 }
-.dev-row {
+
+/* Чередование фонов строго как на главной */
+.dev-section-split.dark-bg {
+    background-color: #14181d;
+}
+.dev-section-split.gray-bg {
+    background-color: #1a2026;
+}
+
+.dev-split-container {
+    max-width: 1200px;
+    width: 100%;
     display: flex;
     align-items: center;
     gap: 60px;
 }
-.dev-row.reverse {
+
+/* Модификатор для разворота контента (картинка слева, текст справа) */
+.dev-split-container.row-reversed {
     flex-direction: row-reverse;
 }
-.dev-col-text {
+
+/* Колонки */
+.dev-split-text-col {
     flex: 1;
 }
-.dev-tag {
-    display: inline-block;
-    color: #ff8562;
-    font-size: 13px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: 15px;
-}
-.dev-col-text h2 {
-    font-size: 32px;
-    font-weight: 700;
-    margin-bottom: 25px;
-    color: #ffffff;
-    line-height: 1.3;
-}
-.dev-col-text p {
-    font-size: 16px;
-    color: rgba(255, 255, 255, 0.75);
-    line-height: 1.7;
-    margin-bottom: 15px;
-}
-.dev-col-img {
+.dev-split-img-col {
     flex: 1;
     display: flex;
     justify-content: center;
 }
-.dev-img-wrapper {
-    width: 100%;
-    max-width: 500px; 
-    aspect-ratio: 1 / 1; 
-    overflow: hidden;
-    border-radius: 12px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+
+/* Оформление заголовков и текста внутри новых блоков */
+.dev-split-title {
+    color: #ffffff;
+    font-size: 36px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 25px;
+    line-height: 1.3;
 }
-.dev-img-wrapper img {
+.dev-split-descr {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 18px;
+    line-height: 1.7;
+}
+
+/* Обертка картинок строго в квадратном формате */
+.dev-square-img-box {
+    width: 100%;
+    max-width: 480px;
+    aspect-ratio: 1 / 1; /* Квадрат */
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+.dev-square-img-box img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.4s ease;
-}
-.dev-img-wrapper:hover img {
-    transform: scale(1.02);
 }
 
-/* Базовые настройки контента для страницы девелоперов */
-.dev-main-content {
-    background-color: #14181d;
-    color: #ffffff;
-    padding-top: 90px; /* Отступ под большую десктопную шапку */
-}
 
 
 /* ==========================================================================
@@ -964,7 +946,34 @@ html {
     /* Уменьшаем отступ под компактную мобильную шапку */
     .dev-main-content {
         padding-top: 72px; 
+        background-color: #14181d;
     }
+
+    /* Адаптив для блоков застройщиков */
+    .dev-main-content {
+        padding-top: 72px; /* Мобильная шапка чуть ниже */
+        background-color: #14181d;
+    }
+    .dev-section-split {
+        padding: 60px 20px;
+    }
+    .dev-split-container, 
+    .dev-split-container.row-reversed {
+        flex-direction: column; /* На смартфонах всё в один ряд сверху вниз */
+        gap: 30px;
+    }
+    .dev-split-title {
+        font-size: 26px;
+        text-align: center;
+    }
+    .dev-split-descr {
+        font-size: 15px;
+        text-align: center;
+    }
+    .dev-square-img-box {
+        max-width: 100%;
+    }
+
 
 
 }
