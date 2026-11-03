@@ -72,7 +72,7 @@
 
   // Create scenes.
   var scenes = data.scenes.map(function(data) {
-    var urlPrefix = "https://tours.wolf-studio.ru/zhk-michurin/project_1/tiles";
+    var urlPrefix = "https://storage.yandexcloud.net/tours.wolf-studio.ru/zhk-michurin/project_1/tiles";
     var source = Marzipano.ImageUrlSource.fromString(
       urlPrefix + "/" + data.id + "/{z}/{f}/{y}/{x}.jpg",
       { cubeMapPreviewUrl: urlPrefix + "/" + data.id + "/preview.jpg" });
