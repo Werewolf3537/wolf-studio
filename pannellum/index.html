@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мой 3D тур из 3-х коридоров</title>
+    
+    <!-- Подключаем CSS из вашей папки css/ -->
+    <link rel="stylesheet" href="css/pannellum.css">
+    
+    <style>
+        /* Растягиваем тур на весь экран браузера */
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #000;
+        }
+        #panorama-container {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Элемент, где отобразится 3D-тур -->
+    <div id="panorama-container"></div>
+
+    <!-- Подключаем JS-библиотеку. libpannellum.js загружать отдельно не нужно, 
+         pannellum.js сам подтянет нужные функции, если они лежат рядом -->
+
+    <!-- ВАЖНО: Сначала подключаем libpannellum.js -->
+    <script src="js/libpannellum.js"></script>
+
+    <!-- Затем подключаем основной файл pannellum.js -->
+    <script src="js/pannellum.js"></script>
+
+
+    <script>
+        pannellum.viewer('panorama-container', {
+            "default": {
+                "firstScene": "hallway1", // Тур начнется с первого коридора
+                "sceneFadeDuration": 1300, // Плавный переход (1 секунда)
+                "autoLoad": true,          // Панорама загружается сразу
+                "hotSpotDebug": false       // 🔔 Включаем режим отладки для поиска координат!
+            },
+
+            "scenes": {
+                // Первый коридор
+                "hallway1": {
+                    "title": "Коридор 1",
+                    "panorama": "images/hallway_1.jpg",
+                    "hotSpots": [
+                        {
+                            "pitch": -26.27,
+                            "yaw": -95.87,
+                            "type": "scene",
+                            "text": "Идти во второй коридор",
+                            "sceneId": "hallway2", // <-- ТУТ НУЖНА ЗАПЯТАЯ!
+                            "targetPitch": "same",
+                            "targetYaw": "same"
+                        },
+                        {
+                            "pitch": -15,
+                            "yaw": -90,
+                            "type": "scene",
+                            "text": "Пройти в третий коридор",
+                            "sceneId": "hallway3", // <-- ТУТ НУЖНА ЗАПЯТАЯ!
+                            "targetPitch": "same",
+                            "targetYaw": "same"
+                        }
+                    ]
+                },
+
+
+                // Второй коридор (центральный, связывает 1 и 3)
+                "hallway2": {
+                    "title": "Коридор 2",
+                    "panorama": "images/hallway_2.jpg",
+                    "hotSpots": [
+                        {
+                            "pitch": -30,
+                            "yaw": 82.38, // Назад
+                            "type": "scene",
+                            "text": "Вернуться в первый коридор",
+                            "sceneId": "hallway1",
+                            "targetPitch": "same",
+                            "targetYaw": "same"
+                        },
+                        {
+                            "pitch": -24,
+                            "yaw": -86, // Вперед
+                            "type": "scene",
+                            "text": "Пройти в третий коридор",
+                            "sceneId": "hallway3",
+                            "targetPitch": "same",
+                            "targetYaw": "same"
+                        }
+                    ]
+                },
+
+                // Третий коридор
+                "hallway3": {
+                    "title": "Коридор 3",
+                    "panorama": "images/hallway_3.jpg",
+                    "hotSpots": [
+                        {
+                            "pitch": -36,
+                            "yaw": 98,
+                            "type": "scene",
+                            "text": "Вернуться во второй коридор",
+                            "sceneId": "hallway2",
+                            "targetPitch": "same",
+                            "targetYaw": "same"
+                        },
+                        {
+                            "pitch": -16,
+                            "yaw": 90, // Вперед
+                            "type": "scene",
+                            "text": "Пройти в первый коридор",
+                            "sceneId": "hallway1",
+                            "targetPitch": "same",
+                            "targetYaw": "same"
+                        }
+                    ]
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
