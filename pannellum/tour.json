@@ -8,7 +8,8 @@
         "orientationOnByDefault": false, 
         "showZoomCtrl": false,       
         "showFullscreenCtrl": false, 
-        "compass": false            
+        "compass": false,
+	"showControls": false            
     },
     "scenes": {
         "1": {
