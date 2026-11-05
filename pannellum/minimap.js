@@ -1,60 +1,80 @@
 /* ==========================================================================
-   КОНФИГУРАЦИЯ ТОЧЕК НА КАРТЕ
-   Задай для каждой сцены её координаты на картинке плана (в процентах от 0 до 100)
+   1. НАСТРОЙКА РАЗМЕРОВ КАРТЫ (ПК И МОБИЛЬНЫЕ)
    ========================================================================== */
-const dotsData = {
-    "1": { top: "30%", left: "45%", title: "1" },
-    "2": { top: "55%", left: "20%", title: "2" },
-    "3": { top: "70%", left: "65%", title: "3" },
-    "4": { top: "40%", left: "80%", title: "4" }
+const sizes = {
+    // Настройки для компьютеров и ноутбуков (ПК)
+    desktop: {
+        width: "350px",  // Ширина карты на ПК (можно в px или в % от экрана, например "25%")
+        height: "250px", // Высота карты на ПК
+        bottom: "80px",  // Отступ снизу (чтобы не перекрывать кнопку)
+        right: "20px"    // Отступ справа
+    },
+    // Настройки для смартфонов и планшетов (экран меньше 768px)
+    mobile: {
+        width: "85%",    // Ширина на телефоне (лучше в %, чтобы подходила под все экраны)
+        height: "220px", // Высота на телефоне
+        bottom: "75px",  // Отступ снизу
+        right: "15px"    // Отступ справа
+    }
 };
 
-// Путь к твоей картинке планировки
+/* ==========================================================================
+   2. КОНФИГУРАЦИЯ ТОЧЕК НА КАРТЕ
+   ========================================================================== */
+const dotsData = {
+    "1": { top: "30%", left: "45%", title: "Сцена 1" },
+    "2": { top: "55%", left: "20%", title: "Сцена 2" },
+    "3": { top: "70%", left: "65%", title: "Сцена 3" },
+    "4": { top: "40%", left: "80%", title: "Сцена 4" }
+};
+
+// Путь к картинке планировки
 const mapImagePath = "images/plan.png"; 
 
 
 /* ==========================================================================
-   АВТОМАТИЧЕСКИЕ ИСПРАВЛЕННЫЕ СТИЛИ (Фикс позиционирования и радара)
+   АВТОГЕНЕРАЦИЯ СТИЛЕЙ С УЧЕТОМ РАЗМЕРОВ
    ========================================================================== */
 const mapStyles = `
-    /* Фиксируем карту в правом нижнем углу, поверх панорамы */
+    /* Базовый контейнер карты для ПК */
     .minimap-container {
         position: absolute !important;
-        bottom: 80px !important;
-        right: 20px !important;
-        width: 300px !important;
-        height: 220px !important;
-        background: rgba(0, 0, 0, 0.8) !important;
-        border: 2px solid rgba(255, 255, 255, 0.2) !important;
+        bottom: ${sizes.desktop.bottom} !important;
+        right: ${sizes.desktop.right} !important;
+        width: ${sizes.desktop.width} !important;
+        height: ${sizes.desktop.height} !important;
+        background: rgba(15, 15, 15, 0.85) !important;
+        backdrop-filter: blur(10px) !important;
+        border: 2px solid rgba(255, 255, 255, 0.15) !important;
         border-radius: 12px !important;
-        z-index: 15 !important;
-        display: none !important; /* По умолчанию скрыта */
-        overflow: visible !important; /* Разрешаем радару выходить за рамки точки */
+        z-index: 9999 !important; /* Поднимаем карту над всем интерфейсом */
+        display: none !important;
+        overflow: visible !important;
     }
     
-    /* Класс активации карты */
     .minimap-container.active {
         display: block !important;
     }
 
-    /* Картинка плана внутри контейнера */
     .minimap-img {
         width: 100% !important;
         height: 100% !important;
-        object-fit: contain !important; /* Картинка пропорционально впишется в окно */
+        object-fit: fill !important; /* Растягивает картинку ровно по границам контейнера, чтобы проценты точек не съезжали */
         pointer-events: none !important;
+        border-radius: 10px !important;
     }
 
-    /* Базовый класс точки (инвидимый контейнер для центрирования) */
+    /* Точки на карте */
     .map-dot {
         position: absolute !important;
-        width: 1px !important;
-        height: 1px !important;
+        width: 20px !important;
+        height: 20px !important;
+        margin-left: -10px !important;
+        margin-top: -10px !important;
         cursor: pointer !important;
-        z-index: 20 !important;
+        z-index: 10001 !important;
     }
 
-    /* Сам кругляшок в центре */
     .dot-core {
         width: 12px !important;
         height: 12px !important;
@@ -66,71 +86,69 @@ const mapStyles = `
         left: 50% !important;
         transform: translate(-50%, -50%) !important;
         box-shadow: 0 0 8px rgba(0,0,0,0.6) !important;
+        z-index: 10003 !important;
         transition: background 0.3s, transform 0.3s !important;
     }
 
-    /* Анимация пульсации для активной точки */
     .map-dot.is-active .dot-core {
         background-color: #2ecc71 !important;
         transform: translate(-50%, -50%) scale(1.2) !important;
     }
 
-    /* РАДАР (Луч взгляда Marzipano-style) */
+    /* РАДАР (Луч взгляда) */
     .radar-beam {
         display: none !important;
         position: absolute !important;
         top: 50% !important;
         left: 50% !important;
-        width: 80px !important;  /* Длина луча */
-        height: 80px !important; /* Ширина раскрытия луча */
+        width: 100px !important;  /* Немного увеличили длину луча для видимости */
+        height: 100px !important; 
         
-        /* Световой конус градиента */
-        background: conic-gradient(from -30deg, rgba(46, 204, 113, 0.4) 0deg, rgba(46, 204, 113, 0) 60deg) !important;
+        /* Жестко выводим радар НАД картинкой, но ПОД самой точкой */
+        z-index: 10002 !important; 
+        
+        background: conic-gradient(from -30deg, rgba(46, 204, 113, 0.45) 0deg, rgba(46, 204, 113, 0) 60deg) !important;
         border-radius: 50% !important;
         
-        /* Сдвигаем центр вращения градиента точно в центр точки */
-        margin-top: -40px !important;
-        margin-left: -40px !important;
+        margin-top: -50px !important;
+        margin-left: -50px !important;
         pointer-events: none !important;
         transform-origin: center center !important;
     }
 
-    /* Показываем радар только на активной точке */
     .map-dot.is-active .radar-beam {
         display: block !important;
     }
 
-    /* АДАПТИВНОСТЬ ПОД ТЕЛЕФОНЫ (Экраны до 768px) */
+    /* НАСТРОЙКИ ДЛЯ МОБИЛЬНЫХ УСТРОЙСТВ */
     @media (max-width: 768px) {
         .minimap-container {
-            bottom: 75px !important;
-            right: 15px !important;
-            width: calc(100% - 30px) !important;
-            max-width: 340px !important;
-            height: 240px !important;
+            bottom: ${sizes.mobile.bottom} !important;
+            right: ${sizes.mobile.right} !important;
+            width: ${sizes.mobile.width} !important;
+            height: ${sizes.mobile.height} !important;
         }
     }
 `;
 
-// Внедряем исправленные стили в тег <head>
 const styleSheet = document.createElement("style");
 styleSheet.innerText = mapStyles;
 document.head.appendChild(styleSheet);
 
 /* ==========================================================================
-   ЛОГИКА СВЯЗИ С PANNELLUM
+   3. ЛОГИКА ИНИЦИАЛИЗАЦИИ КАРТЫ В PANNELLUM
    ========================================================================== */
 function initMinimap(viewerInstance) {
     const mapContainer = document.querySelector('.minimap-container');
     if (!mapContainer) return;
 
-    // 1. Рендерим картинку
+    // Очищаем и создаем структуру заново
     mapContainer.innerHTML = `<img src="${mapImagePath}" class="minimap-img" alt="План">`;
 
-    // 2. Генерируем точки
     Object.keys(dotsData).forEach(sceneId => {
         const data = dotsData[sceneId];
-        const isCurrent = viewerInstance.getScene() === sceneId;
+        const isCurrent = String(viewerInstance.getScene()) === String(sceneId);
+        
         const dotHtml = `
             <div class="map-dot ${isCurrent ? 'is-active' : ''}" style="top: ${data.top}; left: ${data.left};" data-scene="${sceneId}" title="${data.title}">
                 <div class="radar-beam"></div>
@@ -140,39 +158,37 @@ function initMinimap(viewerInstance) {
         mapContainer.insertAdjacentHTML('beforeend', dotHtml);
     });
 
-    // 3. Переключение сцен по клику на точку карты
+    // Клики по точкам
     mapContainer.querySelectorAll('.map-dot').forEach(dot => {
         dot.addEventListener('click', (e) => {
-            e.stopPropagation(); // Чтобы клик по точке не закрывал карту, если есть внешние обработчики
+            e.stopPropagation();
             const targetScene = dot.getAttribute('data-scene');
             if (targetScene) viewerInstance.loadScene(targetScene);
         });
     });
 
-    // 4. Синхронизация активной точки при перемещении по туру
+    // Синхронизация при смене сцены кнопками внутри тура
     viewerInstance.on('scenechange', (sceneId) => {
         mapContainer.querySelectorAll('.map-dot').forEach(dot => dot.classList.remove('is-active'));
-        const activeDot = mapContainer.querySelector(`.map-dot[data-scene="${sceneId}"]`);
+        const activeDot = mapContainer.querySelector(`.map-dot[data-scene="${String(sceneId)}"]`);
         if (activeDot) activeDot.classList.add('is-active');
     });
 
-    // 5. Вращение луча радара вслед за поворотом камеры
+    // Вращение радара Marzipano-style
     viewerInstance.on('animate', () => {
         const currentScene = viewerInstance.getScene();
         const yaw = viewerInstance.getYaw();
-        const activeRadar = mapContainer.querySelector(`.map-dot[data-scene="${currentScene}"] .radar-beam`);
+        const activeRadar = mapContainer.querySelector(`.map-dot[data-scene="${String(currentScene)}"] .radar-beam`);
         
         if (activeRadar) {
-            // В Pannellum yaw идет в обратную сторону относительно стандартного CSS вращения, 
-            // поэтому ставим знак минус перед yaw, чтобы радар крутился синхронно с мышкой.
+            // Крутим радар в противоход yaw из Pannellum
             activeRadar.style.transform = `rotate(${-yaw}deg)`; 
         }
     });
 
-    // 6. Кнопка открыть/закрыть карту
+    // Логика кнопки Открыть/Закрыть
     const mapBtn = document.querySelector('.map-toggle-btn');
     if (mapBtn) {
-        // Очищаем старые события (на всякий случай) и вешаем чистое переключение класса
         mapBtn.replaceWith(mapBtn.cloneNode(true));
         const newMapBtn = document.querySelector('.map-toggle-btn');
         newMapBtn.addEventListener('click', () => {
