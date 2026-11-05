@@ -1,16 +1,16 @@
 {
     "default": {
         "firstScene": "hallway_1",
-        "sceneFadeDuration": 1200,
         "autoLoad": true,
         "hotSpotDebug": true,
         "orientationOnByDefault": false,
         "showControls": false,
+        "dynamicUpdate": false,
         "hfov": 80,
         "minHfov": 65,
         "maxHfov": 90,
         "multiResMinHfov": true,
-        "tileCacheLimit": 12
+        "tileCacheLimit": 15
     },
     "scenes": {
         "bedroom": {
@@ -19,9 +19,9 @@
                 "path": "tiles/bedroom/%l/%s%y_%x",
                 "fallbackPath": "tiles/bedroom/fallback/%s.jpg",
                 "extension": "jpg",
-                "tileResolution": 256,
+                "tileResolution": 512,
                 "maxLevel": 4,
-                "cubeResolution": 2048
+                "cubeResolution": 2600
             },
             "hotSpots": [
                 {
@@ -50,9 +50,9 @@
                 "path": "tiles/hallway_1/%l/%s%y_%x",
                 "fallbackPath": "tiles/hallway_1/fallback/%s.jpg",
                 "extension": "jpg",
-                "tileResolution": 256,
+                "tileResolution": 512,
                 "maxLevel": 4,
-                "cubeResolution": 2048
+                "cubeResolution": 2600
             },
             "hotSpots": [
                 {
@@ -81,9 +81,9 @@
                 "path": "tiles/hallway_2/%l/%s%y_%x",
                 "fallbackPath": "tiles/hallway_2/fallback/%s.jpg",
                 "extension": "jpg",
-                "tileResolution": 256,
+                "tileResolution": 512,
                 "maxLevel": 4,
-                "cubeResolution": 2048
+                "cubeResolution": 2600
             },
             "hotSpots": [
                 {

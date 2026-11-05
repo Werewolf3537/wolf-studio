@@ -5,8 +5,8 @@
         "path": "/%l/%s%y_%x",
         "fallbackPath": "/fallback/%s",
         "extension": "jpg",
-        "tileResolution": 256,
+        "tileResolution": 512,
         "maxLevel": 4,
-        "cubeResolution": 2048
+        "cubeResolution": 2600
     }
 }
