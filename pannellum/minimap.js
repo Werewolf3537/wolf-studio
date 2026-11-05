@@ -3,16 +3,16 @@
    ========================================================================== */
 const sizes = {
     desktop: {
-        width: "350px",  // Ширина карты на ПК
-        height: "250px", // Высота карты на ПК
-        bottom: "80px",  // Отступ снизу
-        right: "20px"    // Отступ справа
+        width: "350px",  
+        height: "250px", 
+        bottom: "80px",  
+        right: "20px"    
     },
     mobile: {
-        width: "85%",    // Ширина на телефоне (в процентах от экрана)
-        height: "220px", // Высота на телефоне
-        bottom: "75px",  // Отступ снизу
-        right: "15px"    // Отступ справа
+        width: "85%",    
+        height: "220px", 
+        bottom: "75px",  
+        right: "15px"    
     }
 };
 
@@ -20,19 +20,16 @@ const sizes = {
    2. КОНФИГУРАЦИЯ ТОЧЕК НА КАРТЕ
    ========================================================================== */
 const dotsData = {
-    "1": { top: "30%", left: "45%", title: "1" },
-    "2": { top: "55%", left: "20%", title: "2" },
-    "3": { top: "70%", left: "65%", title: "3" },
-    "4": { top: "40%", left: "80%", title: "4" }
-    // По аналогии можешь добавлять "5", "6", "7", "8"
+    "1": { top: "30%", left: "45%", title: "Сцена 1" },
+    "2": { top: "55%", left: "20%", title: "Сцена 2" },
+    "3": { top: "70%", left: "65%", title: "Сцена 3" },
+    "4": { top: "40%", left: "80%", title: "Сцена 4" }
 };
 
-// Путь к твоей картинке планировки
 const mapImagePath = "images/plan.png"; 
 
-
 /* ==========================================================================
-   АВТОГЕНЕРАЦИЯ СТИЛЕЙ КАРТЫ
+   АВТОГЕНЕРАЦИЯ СТИЛЕЙ КАРТЫ (Максимальный приоритет слоев)
    ========================================================================== */
 const mapStyles = `
     .minimap-container {
@@ -45,7 +42,7 @@ const mapStyles = `
         backdrop-filter: blur(10px) !important;
         border: 2px solid rgba(255, 255, 255, 0.15) !important;
         border-radius: 12px !important;
-        z-index: 9999 !important; 
+        z-index: 999999 !important; /* Экстремально высокий слой, чтобы не перекрывалось панорамой */
         display: none !important;
         overflow: visible !important;
     }
@@ -69,7 +66,7 @@ const mapStyles = `
         margin-left: -10px !important;
         margin-top: -10px !important;
         cursor: pointer !important;
-        z-index: 10001 !important;
+        z-index: 1000001 !important;
     }
 
     .dot-core {
@@ -83,8 +80,7 @@ const mapStyles = `
         left: 50% !important;
         transform: translate(-50%, -50%) !important;
         box-shadow: 0 0 8px rgba(0,0,0,0.6) !important;
-        z-index: 10003 !important;
-        transition: background 0.3s, transform 0.3s !important;
+        z-index: 1000003 !important;
     }
 
     .map-dot.is-active .dot-core {
@@ -99,7 +95,7 @@ const mapStyles = `
         left: 50% !important;
         width: 120px !important;  
         height: 120px !important; 
-        z-index: 10002 !important; 
+        z-index: 1000002 !important; 
         margin-top: -60px !important;
         margin-left: -60px !important;
         pointer-events: none !important;
@@ -109,6 +105,7 @@ const mapStyles = `
     .radar-beam svg {
         width: 100% !important;
         height: 100% !important;
+        overflow: visible !important;
     }
 
     .map-dot.is-active .radar-beam {
@@ -132,18 +129,21 @@ document.head.appendChild(styleSheet);
 /* ==========================================================================
    3. ЛОГИКА ИНИЦИАЛИЗАЦИИ КАРТЫ В PANNELLUM
    ========================================================================== */
-function initMinimap(viewerInstance) {
-    const mapContainer = document.querySelector('.minimap-container');
+function initMinimap(viewerInstance, containerSelector, buttonSelector) {
+    const mapContainer = document.querySelector(containerSelector || '.minimap-container');
+    const mapBtn = document.querySelector(buttonSelector || '.map-toggle-btn');
+    
     if (!mapContainer) return;
 
+    // Очищаем и рендерим планировку
     mapContainer.innerHTML = `<img src="${mapImagePath}" class="minimap-img" alt="План">`;
 
-    // Мягкий полупрозрачный зеленый SVG-вектор (угол обзора 60 градусов)
+    // Зеленый SVG сектор радара
     const radarSvg = `
         <svg viewBox="0 0 100 100">
             <defs>
                 <radialGradient id="radarGlow" cx="50%" cy="50%" r="50%">
-                    <stop offset="0%" stop-color="#2ecc71" stop-opacity="0.6"/>
+                    <stop offset="0%" stop-color="#2ecc71" stop-opacity="0.7"/>
                     <stop offset="100%" stop-color="#2ecc71" stop-opacity="0"/>
                 </radialGradient>
             </defs>
@@ -151,10 +151,12 @@ function initMinimap(viewerInstance) {
         </svg>
     `;
 
-    // Генерируем точки на карте
+    // Создаем точки на карте на основе текущей активной сцены
+    const currentSceneAtStart = String(viewerInstance.getScene());
+
     Object.keys(dotsData).forEach(sceneId => {
         const data = dotsData[sceneId];
-        const isCurrent = String(viewerInstance.getScene()) === String(sceneId);
+        const isCurrent = currentSceneAtStart === String(sceneId);
         
         const dotHtml = `
             <div class="map-dot ${isCurrent ? 'is-active' : ''}" style="top: ${data.top}; left: ${data.left};" data-scene="${sceneId}" title="${data.title}">
@@ -165,7 +167,7 @@ function initMinimap(viewerInstance) {
         mapContainer.insertAdjacentHTML('beforeend', dotHtml);
     });
 
-    // Клики по точкам карты для перехода
+    // Переход по сценам при клике на точки планировки
     mapContainer.querySelectorAll('.map-dot').forEach(dot => {
         dot.addEventListener('click', (e) => {
             e.stopPropagation();
@@ -174,14 +176,14 @@ function initMinimap(viewerInstance) {
         });
     });
 
-    // Синхронизация активной точки при ходьбе по туру
+    // Переключение активной точки при смене сцены внутри тура
     viewerInstance.on('scenechange', (sceneId) => {
         mapContainer.querySelectorAll('.map-dot').forEach(dot => dot.classList.remove('is-active'));
         const activeDot = mapContainer.querySelector(`.map-dot[data-scene="${String(sceneId)}"]`);
         if (activeDot) activeDot.classList.add('is-active');
     });
 
-    // Функция обновления вращения радара Marzipano-style
+    // Функция синхронного вращения радара за камерой
     function updateRadar() {
         const currentScene = viewerInstance.getScene();
         const yaw = viewerInstance.getYaw();
@@ -191,16 +193,14 @@ function initMinimap(viewerInstance) {
         }
     }
 
-    // Подвязываем к событиям Pannellum + дублируем интервалом на случай фризов движка
     viewerInstance.on('animate', updateRadar);
-    setInterval(updateRadar, 100);
+    setInterval(updateRadar, 50); // Увеличили частоту обновления до 50мс для идеальной плавности
 
-    // Логика кнопки Открыть/Закрыть карту
-    const mapBtn = document.querySelector('.map-toggle-btn');
+    // Чистая логика переключения кнопки Открыть/Закрыть (без дублирования событий)
     if (mapBtn) {
-        mapBtn.replaceWith(mapBtn.cloneNode(true));
-        const newMapBtn = document.querySelector('.map-toggle-btn');
-        newMapBtn.addEventListener('click', () => {
+        mapBtn.onclick = null; // Принудительно очищаем старый инлайн-атрибут
+        mapBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
             mapContainer.classList.toggle('active');
         });
     }
