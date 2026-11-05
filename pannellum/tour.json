@@ -1,15 +1,11 @@
 {
-    "projectTitle": "Pannellum Project_1",
     "default": {
         "firstScene": "1",
         "sceneFadeDuration": 1000,
         "autoLoad": true,
         "hotSpotDebug": true,
-        "orientationOnByDefault": false, 
-        "showZoomCtrl": false,       
-        "showFullscreenCtrl": false, 
-        "compass": false,
-	"showControls": false            
+        "orientationOnByDefault": true,
+	"showControls": false
     },
     "scenes": {
         "1": {

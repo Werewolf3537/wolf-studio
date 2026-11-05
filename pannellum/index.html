@@ -3,125 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D Виртуальный Тур</title>
+    <title>Мой 3D-тур Pannellum</title>
     <link rel="stylesheet" href="css/pannellum.css">
-    <link rel="stylesheet" href="css/style.css">
-
     <style>
-        /* Жесткое скрытие названия панорамы в левом нижнем углу */
-        .pnm-ui .pnm-title-box, 
-        #panorama-container .pnm-title-box,
-        .pnm-title-box {
-            display: none !important;
-            opacity: 0 !important;
-            visibility: hidden !important;
-            pointer-events: none !important;
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #000;
         }
-
-        /* Полное уничтожение компаса на смартфонах */
-        .pnm-ui .pnm-compass,
-        #panorama-container .pnm-compass,
-        .pnm-compass {
-            display: none !important;
-            opacity: 0 !important;
-            visibility: hidden !important;
-            pointer-events: none !important;
+        #panorama-container {
+            width: 100%;
+            height: 100%;
         }
     </style>
 </head>
 <body>
 
-    <!-- Название проекта сверху экрана -->
-    <div class="tour-header" id="project-title">Загрузка проекта...</div>
-
-    <!-- Кнопка и меню списка проектов -->
-    <button class="menu-toggle-btn" onclick="toggleMenu()">☰ Проекты</button>
-    <div class="projects-menu" id="projectsMenu">
-        <h3>Мои проекты</h3>
-        <ul class="projects-list">
-            <li><a href="?project=flat1">ЖК "Комфорт" - Кв. 45</a></li>
-            <li><a href="?project=flat2">ЖК "Премиум" - Офис</a></li>
-            <li><a href="?project=cottage">Загородный дом</a></li>
-        </ul>
-    </div>
-
-    <!-- Кастомная кнопка Гироскопа -->
-    <button class="gyro-toggle-btn" id="gyroBtn" onclick="toggleGyro()">📱 Гироскоп: Выкл</button>
-
-    <!-- Кнопка и контейнер мини-карты (БЕЗ onclick) -->
-    <button class="map-toggle-btn" id="mapToggleBtn">🗺️ Карта</button>
-    <div class="minimap-container" id="miniMap"></div>
-
-    <!-- Область 3D-тура -->
     <div id="panorama-container"></div>
 
-    <!-- Подключение библиотек Pannellum -->
     <script src="js/libpannellum.js"></script>
     <script src="js/pannellum.js"></script>
 
-    <!-- Подключаем карту -->
-    <script src="minimap.js"></script>
-
     <script>
-        let viewer = null;
-        let isGyroActive = false;
-
-        // 1. Динамическое чтение конфигурации тура
+        // Динамически загружаем файл конфигурации тура
         fetch('tour.json')
             .then(response => response.json())
             .then(config => {
-                viewer = pannellum.viewer('panorama-container', config);
-                document.getElementById('project-title').innerText = config.projectTitle || "Мой 3D Тур";
-
-                // Запускаем карту ТОЛЬКО когда Pannellum полностью загрузит первую сцену
-                viewer.on('load', function() {
-                    if (typeof initMinimap === 'function') {
-                        // Передаем и плеер, и ID контейнера, и ID кнопки
-                        initMinimap(viewer, '#miniMap', '#mapToggleBtn');
-                    }
-                });
+                // Инициализируем плеер с загруженными данными
+                pannellum.viewer('panorama-container', config);
             })
             .catch(error => {
-                console.error('Ошибка загрузки конфигурации:', error);
-                alert('Не удалось загрузить tour.json');
+                console.error('Ошибка загрузки конфигурации тура:', error);
+                alert('Не удалось загрузить tour.json. Убедитесь, что запускаете тур через локальный сервер (Live Server)!');
             });
-
-        // 2. Логика управления Гироскопом
-        function toggleGyro() {
-            if (!viewer) return;
-            const btn = document.getElementById('gyroBtn');
-            isGyroActive = !isGyroActive;
-
-            if (isGyroActive) {
-                viewer.startOrientation();
-                btn.innerText = "📱 Гироскоп: Вкл";
-                btn.classList.add('active');
-                viewer.setMouseZoom(false); 
-                viewer.getConfig().draggable = false;
-                window.gyroInterval = setInterval(() => {
-                    if(viewer && isGyroActive) viewer.startOrientation();
-                }, 100);
-            } else {
-                viewer.stopOrientation();
-                btn.innerText = "📱 Гироскоп: Выкл";
-                btn.classList.remove('active');
-                viewer.setMouseZoom(true);
-                viewer.getConfig().draggable = true;
-                clearInterval(window.gyroInterval);
-            }
-        }
-
-        // Логика списка проектов
-        function toggleMenu() {
-            document.getElementById('projectsMenu').classList.toggle('active');
-        }
-
-        // Закрытие меню при начале вращения панорамы
-        const closeMenu = () => {
-            document.getElementById('projectsMenu').classList.remove('active');
-        };
-        document.getElementById('panorama-container').addEventListener('click', closeMenu);
-        document.getElementById('panorama-container').addEventListener('touchstart', closeMenu);
     </script>
 
 </body>
