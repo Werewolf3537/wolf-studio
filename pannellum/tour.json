@@ -1,28 +1,19 @@
 {
     "default": {
-        "firstScene": "hallway_1",
+        "firstScene": "bedroom",
         "autoLoad": true,
         "hotSpotDebug": true,
         "orientationOnByDefault": false,
         "showControls": false,
-        "dynamicUpdate": false,
-        "hfov": 90,
+        "hfov": 80,
         "minHfov": 65,
-        "maxHfov": 140,
-        "multiResMinHfov": true,
-        "tileCacheLimit": 15
+        "maxHfov": 90
     },
     "scenes": {
         "bedroom": {
-            "type": "multires",
-            "multiRes": {
-                "path": "tiles/bedroom/%l/%s%y_%x",
-                "fallbackPath": "tiles/bedroom/fallback/%s.jpg",
-                "extension": "jpg",
-                "tileResolution": 512,
-                "maxLevel": 4,
-                "cubeResolution": 2600
-            },
+            "type": "equirectangular",
+            "panorama": "images/bedroom.jpg",
+            "preview": "previews/prev_bedroom.jpg",
             "hotSpots": [
                 {
                     "pitch": 0,
@@ -45,15 +36,9 @@
             ]
         },
         "hallway_1": {
-            "type": "multires",
-            "multiRes": {
-                "path": "tiles/hallway_1/%l/%s%y_%x",
-                "fallbackPath": "tiles/hallway_1/fallback/%s.jpg",
-                "extension": "jpg",
-                "tileResolution": 512,
-                "maxLevel": 4,
-                "cubeResolution": 2600
-            },
+            "type": "equirectangular",
+            "panorama": "images/hallway_1.jpg",
+            "preview": "previews/prev_hallway_1.jpg",
             "hotSpots": [
                 {
                     "pitch": 0,
@@ -76,15 +61,9 @@
             ]
         },
         "hallway_2": {
-            "type": "multires",
-            "multiRes": {
-                "path": "tiles/hallway_2/%l/%s%y_%x",
-                "fallbackPath": "tiles/hallway_2/fallback/%s.jpg",
-                "extension": "jpg",
-                "tileResolution": 512,
-                "maxLevel": 4,
-                "cubeResolution": 2600
-            },
+            "type": "equirectangular",
+            "panorama": "images/hallway_2.jpg",
+            "preview": "previews/prev_hallway_2.jpg",
             "hotSpots": [
                 {
                     "pitch": 0,
