@@ -14,26 +14,74 @@
             overflow: hidden;
             background-color: #000;
         }
+        
+        /* Делаем родительский контейнер относительно позиционированным */
+        #panorama-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
         #panorama-container {
             width: 100%;
             height: 100%;
+        }
+
+        /* Наш черный слой для эффекта Fade to Black */
+        #fade-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            z-index: 10;          /* Слой встает поверх панорамы */
+            pointer-events: none; /* Пропускает клики сквозь себя, когда прозрачный */
+            opacity: 0;
+            transition: opacity 0.4s ease-in-out; /* Время ухода в черный (0.4 сек) */
+        }
+
+        /* Класс, который делает шторку видимой */
+        #fade-overlay.visible {
+            opacity: 1;
+            pointer-events: auto; /* Блокирует случайные клики во время смены сцены */
         }
     </style>
 </head>
 <body>
 
-    <div id="panorama-container"></div>
+    <!-- Обернули контейнер панорамы, чтобы добавить слой затемнения -->
+    <div id="panorama-wrapper">
+        <div id="panorama-container"></div>
+        <div id="fade-overlay"></div>
+    </div>
 
     <script src="js/libpannellum.js"></script>
     <script src="js/pannellum.js"></script>
 
     <script>
-        // Динамически загружаем файл конфигурации тура
+        var viewer; // Сюда мы сохраним экземпляр плеера
+        var overlay = document.getElementById('fade-overlay');
+
         fetch('tour.json')
             .then(response => response.json())
             .then(config => {
-                // Инициализируем плеер с загруженными данными
-                pannellum.viewer('panorama-container', config);
+                // 1. Инициализируем плеер и записываем его в переменную viewer
+                viewer = pannellum.viewer('panorama-container', config);
+
+                // 2. Ловим событие клика по хотспоту переключения сцены
+                viewer.on('scenechange', function(targetSceneId) {
+                    overlay.classList.add('visible'); // Включаем черную шторку
+                });
+
+                // 3. Ловим событие, когда новая панорама полностью загрузилась
+                viewer.on('load', function() {
+                    // Небольшой тайм-аут в 150 миллисекунд, 
+                    // чтобы мобильный GPU успел нарисовать картинку без лагов
+                    setTimeout(function() {
+                        overlay.classList.remove('visible'); // Плавное открытие сцены
+                    }, 150);
+                });
             })
             .catch(error => {
                 console.error('Ошибка загрузки конфигурации тура:', error);
