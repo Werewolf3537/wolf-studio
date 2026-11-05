@@ -3,116 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D Виртуальный Тур</title>
+    <title>Мой 3D-тур Pannellum</title>
     <link rel="stylesheet" href="css/pannellum.css">
-    <link rel="stylesheet" href="css/style.css">
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #000;
+        }
+        #panorama-container {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
 </head>
 <body>
 
-    <!-- Название проекта сверху экрана -->
-    <div class="tour-header" id="project-title">Загрузка проекта...</div>
-
-    <!-- Кнопка и меню списка проектов -->
-    <button class="menu-toggle-btn" onclick="toggleMenu()">☰ Проекты</button>
-    <div class="projects-menu" id="projectsMenu">
-        <h3>Мои проекты</h3>
-        <ul class="projects-list">
-            <li><a href="?project=flat1">ЖК "Комфорт" - Кв. 45</a></li>
-            <li><a href="?project=flat2">ЖК "Премиум" - Офис</a></li>
-            <li><a href="?project=cottage">Загородный дом</a></li>
-        </ul>
-    </div>
-
-    <!-- Кастомная кнопка Гироскопа -->
-    <button class="gyro-toggle-btn" id="gyroBtn" onclick="toggleGyro()">📱 Гироскоп: Выкл</button>
-
-    <!-- Кнопка и контейнер мини-карты -->
-    <button class="map-toggle-btn" onclick="toggleMap()">🗺️ Карта</button>
-    <div class="minimap-container" id="miniMap">
-        <img src="images/plan.png" alt="Планировка" class="minimap-img">
-    </div>
-
-    <!-- Область 3D-тура -->
     <div id="panorama-container"></div>
 
     <script src="js/libpannellum.js"></script>
     <script src="js/pannellum.js"></script>
 
     <script>
-        let viewer = null;
-        let isGyroActive = false;
-
-        // 1. Динамическое чтение конфигурации тура
+        // Динамически загружаем файл конфигурации тура
         fetch('tour.json')
             .then(response => response.json())
             .then(config => {
-                // Инициализируем плеер и сохраняем ссылку в переменную viewer
-                viewer = pannellum.viewer('panorama-container', config);
-                document.getElementById('project-title').innerText = config.projectTitle || "Мой 3D Тур";
+                // Инициализируем плеер с загруженными данными
+                pannellum.viewer('panorama-container', config);
             })
             .catch(error => {
-                console.error('Ошибка:', error);
-                alert('Не удалось загрузить tour.json');
+                console.error('Ошибка загрузки конфигурации тура:', error);
+                alert('Не удалось загрузить tour.json. Убедитесь, что запускаете тур через локальный сервер (Live Server)!');
             });
-
-        // 2. Умная логика управления Гироскопом
-        function toggleGyro() {
-            if (!viewer) return;
-
-            const btn = document.getElementById('gyroBtn');
-            isGyroActive = !isGyroActive;
-
-            if (isGyroActive) {
-                // Включаем гироскоп в Pannellum
-                viewer.startOrientation();
-                btn.innerText = "📱 Гироскоп: Вкл";
-                btn.classList.add('active');
-
-                // Включаем жесткую блокировку ручного вращения (но хотспоты кликаются)
-                viewer.setMouseZoom(false); // Отключаем зум колесиком/щипком на время гироскопа
-                
-                // Чтобы заблокировать перетаскивание мышкой/пальцем, подменяем внутренние параметры лимитов
-                viewer.getConfig().draggable = false;
-                
-                // Переопределяем дефолтный сброс Pannellum при клике
-                // Каждые 100мс принудительно удерживаем гироскоп активным, если разработчики пытаются его потушить
-                window.gyroInterval = setInterval(() => {
-                    if(viewer && isGyroActive) viewer.startOrientation();
-                }, 100);
-
-            } else {
-                // Выключаем гироскоп
-                viewer.stopOrientation();
-                btn.innerText = "📱 Гироскоп: Выкл";
-                btn.classList.remove('active');
-
-                // Возвращаем полноценное ручное управление
-                viewer.setMouseZoom(true);
-                viewer.getConfig().draggable = true;
-                
-                // Очищаем интерьер удержания
-                clearInterval(window.gyroInterval);
-            }
-        }
-
-        // 3.1. Логика интерактивного интерфейса (Открыть/Закрыть)
-        function toggleMenu() {
-            document.getElementById('projectsMenu').classList.toggle('active');
-        }
-
-        function toggleMap() {
-            document.getElementById('miniMap').classList.toggle('active');
-        }
-
-        // 3.2. Умное закрытие меню при начале вращения панорамы
-        const closeMenu = () => {
-            document.getElementById('projectsMenu').classList.remove('active');
-        };
-
-        // Работает и при клике мышкой на ПК, и при первом касании пальцем на смартфоне
-        document.getElementById('panorama-container').addEventListener('click', closeMenu);
-        document.getElementById('panorama-container').addEventListener('touchstart', closeMenu);
-
     </script>
 
 </body>

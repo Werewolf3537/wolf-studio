@@ -1,6 +1,6 @@
 {
     "default": {
-        "firstScene": "1",
+        "firstScene": "hallway_1",
         "sceneFadeDuration": 1200,
         "autoLoad": true,
         "hotSpotDebug": true,
@@ -13,11 +13,11 @@
         "tileCacheLimit": 12
     },
     "scenes": {
-        "1": {
+        "bedroom": {
             "type": "multires",
             "multiRes": {
-                "path": "tiles/1/%l/%s%y_%x",
-                "fallbackPath": "tiles/1/fallback/%s.jpg",
+                "path": "tiles/bedroom/%l/%s%y_%x",
+                "fallbackPath": "tiles/bedroom/fallback/%s.jpg",
                 "extension": "jpg",
                 "tileResolution": 256,
                 "maxLevel": 4,
@@ -29,7 +29,7 @@
                     "yaw": 0,
                     "type": "scene",
                     "text": "Вперед",
-                    "sceneId": "2",
+                    "sceneId": "hallway_1",
                     "targetPitch": "same",
                     "targetYaw": "same"
                 },
@@ -38,17 +38,17 @@
                     "yaw": 0,
                     "type": "scene",
                     "text": "Назад",
-                    "sceneId": "2",
+                    "sceneId": "hallway_1",
                     "targetPitch": "same",
                     "targetYaw": "same"
                 }
             ]
         },
-        "2": {
+        "hallway_1": {
             "type": "multires",
             "multiRes": {
-                "path": "tiles/2/%l/%s%y_%x",
-                "fallbackPath": "tiles/2/fallback/%s.jpg",
+                "path": "tiles/hallway_1/%l/%s%y_%x",
+                "fallbackPath": "tiles/hallway_1/fallback/%s.jpg",
                 "extension": "jpg",
                 "tileResolution": 256,
                 "maxLevel": 4,
@@ -60,7 +60,7 @@
                     "yaw": 0,
                     "type": "scene",
                     "text": "Вперед",
-                    "sceneId": "3",
+                    "sceneId": "hallway_2",
                     "targetPitch": "same",
                     "targetYaw": "same"
                 },
@@ -69,17 +69,17 @@
                     "yaw": 0,
                     "type": "scene",
                     "text": "Назад",
-                    "sceneId": "1",
+                    "sceneId": "bedroom",
                     "targetPitch": "same",
                     "targetYaw": "same"
                 }
             ]
         },
-        "3": {
+        "hallway_2": {
             "type": "multires",
             "multiRes": {
-                "path": "tiles/3/%l/%s%y_%x",
-                "fallbackPath": "tiles/3/fallback/%s.jpg",
+                "path": "tiles/hallway_2/%l/%s%y_%x",
+                "fallbackPath": "tiles/hallway_2/fallback/%s.jpg",
                 "extension": "jpg",
                 "tileResolution": 256,
                 "maxLevel": 4,
@@ -91,7 +91,7 @@
                     "yaw": 0,
                     "type": "scene",
                     "text": "Вперед",
-                    "sceneId": "4",
+                    "sceneId": "hallway_1",
                     "targetPitch": "same",
                     "targetYaw": "same"
                 },
@@ -100,162 +100,7 @@
                     "yaw": 0,
                     "type": "scene",
                     "text": "Назад",
-                    "sceneId": "2",
-                    "targetPitch": "same",
-                    "targetYaw": "same"
-                }
-            ]
-        },
-        "4": {
-            "type": "multires",
-            "multiRes": {
-                "path": "tiles/4/%l/%s%y_%x",
-                "fallbackPath": "tiles/4/fallback/%s.jpg",
-                "extension": "jpg",
-                "tileResolution": 256,
-                "maxLevel": 4,
-                "cubeResolution": 2048
-            },
-            "hotSpots": [
-                {
-                    "pitch": 0,
-                    "yaw": 0,
-                    "type": "scene",
-                    "text": "Вперед",
-                    "sceneId": "5",
-                    "targetPitch": "same",
-                    "targetYaw": "same"
-                },
-                {
-                    "pitch": -30,
-                    "yaw": 0,
-                    "type": "scene",
-                    "text": "Назад",
-                    "sceneId": "3",
-                    "targetPitch": "same",
-                    "targetYaw": "same"
-                }
-            ]
-        },
-        "5": {
-            "type": "multires",
-            "multiRes": {
-                "path": "tiles/5/%l/%s%y_%x",
-                "fallbackPath": "tiles/5/fallback/%s.jpg",
-                "extension": "jpg",
-                "tileResolution": 256,
-                "maxLevel": 4,
-                "cubeResolution": 2048
-            },
-            "hotSpots": [
-                {
-                    "pitch": 0,
-                    "yaw": 0,
-                    "type": "scene",
-                    "text": "Вперед",
-                    "sceneId": "6",
-                    "targetPitch": "same",
-                    "targetYaw": "same"
-                },
-                {
-                    "pitch": -30,
-                    "yaw": 0,
-                    "type": "scene",
-                    "text": "Назад",
-                    "sceneId": "4",
-                    "targetPitch": "same",
-                    "targetYaw": "same"
-                }
-            ]
-        },
-        "6": {
-            "type": "multires",
-            "multiRes": {
-                "path": "tiles/6/%l/%s%y_%x",
-                "fallbackPath": "tiles/6/fallback/%s.jpg",
-                "extension": "jpg",
-                "tileResolution": 256,
-                "maxLevel": 4,
-                "cubeResolution": 2048
-            },
-            "hotSpots": [
-                {
-                    "pitch": 0,
-                    "yaw": 0,
-                    "type": "scene",
-                    "text": "Вперед",
-                    "sceneId": "7",
-                    "targetPitch": "same",
-                    "targetYaw": "same"
-                },
-                {
-                    "pitch": -30,
-                    "yaw": 0,
-                    "type": "scene",
-                    "text": "Назад",
-                    "sceneId": "5",
-                    "targetPitch": "same",
-                    "targetYaw": "same"
-                }
-            ]
-        },
-        "7": {
-            "type": "multires",
-            "multiRes": {
-                "path": "tiles/7/%l/%s%y_%x",
-                "fallbackPath": "tiles/7/fallback/%s.jpg",
-                "extension": "jpg",
-                "tileResolution": 256,
-                "maxLevel": 4,
-                "cubeResolution": 2048
-            },
-            "hotSpots": [
-                {
-                    "pitch": 0,
-                    "yaw": 0,
-                    "type": "scene",
-                    "text": "Вперед",
-                    "sceneId": "8",
-                    "targetPitch": "same",
-                    "targetYaw": "same"
-                },
-                {
-                    "pitch": -30,
-                    "yaw": 0,
-                    "type": "scene",
-                    "text": "Назад",
-                    "sceneId": "6",
-                    "targetPitch": "same",
-                    "targetYaw": "same"
-                }
-            ]
-        },
-        "8": {
-            "type": "multires",
-            "multiRes": {
-                "path": "tiles/8/%l/%s%y_%x",
-                "fallbackPath": "tiles/8/fallback/%s.jpg",
-                "extension": "jpg",
-                "tileResolution": 256,
-                "maxLevel": 4,
-                "cubeResolution": 2048
-            },
-            "hotSpots": [
-                {
-                    "pitch": 0,
-                    "yaw": 0,
-                    "type": "scene",
-                    "text": "Вперед",
-                    "sceneId": "7",
-                    "targetPitch": "same",
-                    "targetYaw": "same"
-                },
-                {
-                    "pitch": -30,
-                    "yaw": 0,
-                    "type": "scene",
-                    "text": "Назад",
-                    "sceneId": "7",
+                    "sceneId": "hallway_1",
                     "targetPitch": "same",
                     "targetYaw": "same"
                 }
