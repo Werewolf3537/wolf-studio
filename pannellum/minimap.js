@@ -2,19 +2,17 @@
    1. НАСТРОЙКА РАЗМЕРОВ КАРТЫ (ПК И МОБИЛЬНЫЕ)
    ========================================================================== */
 const sizes = {
-    // Настройки для компьютеров и ноутбуков (ПК)
     desktop: {
-        width: "350px",  // Ширина карты на ПК (можно в px или в % от экрана, например "25%")
-        height: "250px", // Высота карты на ПК
-        bottom: "80px",  // Отступ снизу (чтобы не перекрывать кнопку)
-        right: "20px"    // Отступ справа
+        width: "350px",  
+        height: "250px", 
+        bottom: "80px",  
+        right: "20px"    
     },
-    // Настройки для смартфонов и планшетов (экран меньше 768px)
     mobile: {
-        width: "85%",    // Ширина на телефоне (лучше в %, чтобы подходила под все экраны)
-        height: "220px", // Высота на телефоне
-        bottom: "75px",  // Отступ снизу
-        right: "15px"    // Отступ справа
+        width: "85%",    
+        height: "220px", 
+        bottom: "75px",  
+        right: "15px"    
     }
 };
 
@@ -33,10 +31,9 @@ const mapImagePath = "images/plan.png";
 
 
 /* ==========================================================================
-   АВТОГЕНЕРАЦИЯ СТИЛЕЙ С УЧЕТОМ РАЗМЕРОВ
+   АВТОГЕНЕРАЦИЯ СТИЛЕЙ (С переходом на SVG-луч)
    ========================================================================== */
 const mapStyles = `
-    /* Базовый контейнер карты для ПК */
     .minimap-container {
         position: absolute !important;
         bottom: ${sizes.desktop.bottom} !important;
@@ -47,7 +44,7 @@ const mapStyles = `
         backdrop-filter: blur(10px) !important;
         border: 2px solid rgba(255, 255, 255, 0.15) !important;
         border-radius: 12px !important;
-        z-index: 9999 !important; /* Поднимаем карту над всем интерфейсом */
+        z-index: 9999 !important; 
         display: none !important;
         overflow: visible !important;
     }
@@ -59,12 +56,11 @@ const mapStyles = `
     .minimap-img {
         width: 100% !important;
         height: 100% !important;
-        object-fit: fill !important; /* Растягивает картинку ровно по границам контейнера, чтобы проценты точек не съезжали */
+        object-fit: fill !important; 
         pointer-events: none !important;
         border-radius: 10px !important;
     }
 
-    /* Точки на карте */
     .map-dot {
         position: absolute !important;
         width: 20px !important;
@@ -95,32 +91,30 @@ const mapStyles = `
         transform: translate(-50%, -50%) scale(1.2) !important;
     }
 
-    /* РАДАР (Луч взгляда) */
+    /* РАДАР ОБНОВЛЕННЫЙ: теперь это отцентрированный контейнер для SVG */
     .radar-beam {
         display: none !important;
         position: absolute !important;
         top: 50% !important;
         left: 50% !important;
-        width: 100px !important;  /* Немного увеличили длину луча для видимости */
-        height: 100px !important; 
-        
-        /* Жестко выводим радар НАД картинкой, но ПОД самой точкой */
+        width: 120px !important;  /* Область видимости луча */
+        height: 120px !important; 
         z-index: 10002 !important; 
-        
-        background: conic-gradient(from -30deg, rgba(46, 204, 113, 0.45) 0deg, rgba(46, 204, 113, 0) 60deg) !important;
-        border-radius: 50% !important;
-        
-        margin-top: -50px !important;
-        margin-left: -50px !important;
+        margin-top: -60px !important;
+        margin-left: -60px !important;
         pointer-events: none !important;
         transform-origin: center center !important;
+    }
+
+    .radar-beam svg {
+        width: 100% !important;
+        height: 100% !important;
     }
 
     .map-dot.is-active .radar-beam {
         display: block !important;
     }
 
-    /* НАСТРОЙКИ ДЛЯ МОБИЛЬНЫХ УСТРОЙСТВ */
     @media (max-width: 768px) {
         .minimap-container {
             bottom: ${sizes.mobile.bottom} !important;
@@ -142,8 +136,21 @@ function initMinimap(viewerInstance) {
     const mapContainer = document.querySelector('.minimap-container');
     if (!mapContainer) return;
 
-    // Очищаем и создаем структуру заново
     mapContainer.innerHTML = `<img src="${mapImagePath}" class="minimap-img" alt="План">`;
+
+    // Код SVG-радара (светящийся зеленый сектор 60 градусов, направленный вверх)
+    const radarSvg = `
+        <svg viewBox="0 0 100 100">
+            <defs>
+                <radialGradient id="radarGlow" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                    <stop offset="0%" stop-color="#2ecc71" stop-opacity="0.6"/>
+                    <stop offset="100%" stop-color="#2ecc71" stop-opacity="0"/>
+                </radialGradient>
+            </defs>
+            <!-- Рисуем конус обзора от центра (50,50) -->
+            <path d="M 50 50 L 25 6 A 50 50 0 0 1 75 6 Z" fill="url(#radarGlow)" />
+        </svg>
+    `;
 
     Object.keys(dotsData).forEach(sceneId => {
         const data = dotsData[sceneId];
@@ -151,7 +158,7 @@ function initMinimap(viewerInstance) {
         
         const dotHtml = `
             <div class="map-dot ${isCurrent ? 'is-active' : ''}" style="top: ${data.top}; left: ${data.left};" data-scene="${sceneId}" title="${data.title}">
-                <div class="radar-beam"></div>
+                <div class="radar-beam">${radarSvg}</div>
                 <div class="dot-core"></div>
             </div>
         `;
@@ -167,21 +174,21 @@ function initMinimap(viewerInstance) {
         });
     });
 
-    // Синхронизация при смене сцены кнопками внутри тура
+    // Синхронизация при смене сцены
     viewerInstance.on('scenechange', (sceneId) => {
         mapContainer.querySelectorAll('.map-dot').forEach(dot => dot.classList.remove('is-active'));
         const activeDot = mapContainer.querySelector(`.map-dot[data-scene="${String(sceneId)}"]`);
         if (activeDot) activeDot.classList.add('is-active');
     });
 
-    // Вращение радара Marzipano-style
+    // Вращение радара
     viewerInstance.on('animate', () => {
         const currentScene = viewerInstance.getScene();
         const yaw = viewerInstance.getYaw();
         const activeRadar = mapContainer.querySelector(`.map-dot[data-scene="${String(currentScene)}"] .radar-beam`);
         
         if (activeRadar) {
-            // Крутим радар в противоход yaw из Pannellum
+            // Крутим SVG маску по значению yaw
             activeRadar.style.transform = `rotate(${-yaw}deg)`; 
         }
     });
