@@ -1,0 +1,182 @@
+{
+    "projectTitle": "Pannellum Project_1",
+    "default": {
+        "firstScene": "1",
+        "sceneFadeDuration": 1000,
+        "autoLoad": true,
+        "hotSpotDebug": true,
+        "orientationOnByDefault": false, 
+        "showZoomCtrl": false,       
+        "showFullscreenCtrl": false, 
+        "compass": false           
+    },
+    "scenes": {
+        "1": {
+            "title": "1",
+            "type": "multires",
+            "pitch": -7,
+            "yaw": -68,
+            "multiRes": {
+                "path": "tiles/1/%l/%s%y_%x",
+                "fallbackPath": "tiles/1/fallback/%s",
+                "extension": "jpg",
+                "tileResolution": 512,
+                "maxLevel": 4,
+                "cubeResolution": 2544
+            },
+   		 "hotSpots": [
+       		     {
+           		 "pitch": -29,         
+            		 "yaw": -83,            
+           		 "type": "scene",
+           		 "text": "2",    
+           		 "sceneId": "2",    
+           		 "targetPitch": "same",
+           		 "targetYaw": "same"
+        	      },
+       		     {
+           		 "pitch": -20,         
+            		 "yaw": -49,            
+           		 "type": "scene",
+           		 "text": "3",    
+           		 "sceneId": "3",    
+           		 "targetPitch": "same",
+           		 "targetYaw": "same"
+        	      }
+    		 ]
+        },
+
+        "2": {
+            "title": "2",
+            "type": "multires",
+            "multiRes": {
+                "path": "tiles/2/%l/%s%y_%x",
+                "fallbackPath": "tiles/2/fallback/%s",
+                "extension": "jpg",
+                "tileResolution": 512,
+                "maxLevel": 4,
+                "cubeResolution": 2544
+            },
+   		 "hotSpots": [
+       		     {
+           		 "pitch": -26,         
+            		 "yaw": 86,            
+           		 "type": "scene",
+           		 "text": "1",    
+           		 "sceneId": "1",    
+           		 "targetPitch": "same",
+           		 "targetYaw": "same"
+        	      },
+       		     {
+           		 "pitch": -30,         
+            		 "yaw": 14,            
+           		 "type": "scene",
+           		 "text": "3",    
+           		 "sceneId": "3",    
+           		 "targetPitch": "same",
+           		 "targetYaw": "same"
+        	      }
+    		 ]
+        },
+
+        "3": {
+            "title": "3",
+            "type": "multires",
+            "multiRes": {
+                "path": "tiles/3/%l/%s%y_%x",
+                "fallbackPath": "tiles/3/fallback/%s",
+                "extension": "jpg",
+                "tileResolution": 512,
+                "maxLevel": 4,
+                "cubeResolution": 2544
+            },
+   		 "hotSpots": [
+       		     {
+           		 "pitch": -34,         
+            		 "yaw": -177,            
+           		 "type": "scene",
+           		 "text": "2",    
+           		 "sceneId": "2",    
+           		 "targetPitch": "same",
+           		 "targetYaw": "same"
+        	     },
+       		     {
+           		 "pitch": -37,         
+            		 "yaw": 88,            
+           		 "type": "scene",
+           		 "text": "4",    
+           		 "sceneId": "4",    
+           		 "targetPitch": "same",
+           		 "targetYaw": "same"
+        	      }
+    		 ]
+        },
+
+
+        "4": {
+            "title": "4",
+            "type": "multires",
+            "multiRes": {
+                "path": "tiles/4/%l/%s%y_%x",
+                "fallbackPath": "tiles/4/fallback/%s",
+                "extension": "jpg",
+                "tileResolution": 512,
+                "maxLevel": 4,
+                "cubeResolution": 2544
+            },
+            "hotSpots": []
+        },
+        "5": {
+            "title": "5",
+            "type": "multires",
+            "multiRes": {
+                "path": "tiles/5/%l/%s%y_%x",
+                "fallbackPath": "tiles/5/fallback/%s",
+                "extension": "jpg",
+                "tileResolution": 512,
+                "maxLevel": 4,
+                "cubeResolution": 2544
+            },
+            "hotSpots": []
+        },
+        "6": {
+            "title": "6",
+            "type": "multires",
+            "multiRes": {
+                "path": "tiles/6/%l/%s%y_%x",
+                "fallbackPath": "tiles/6/fallback/%s",
+                "extension": "jpg",
+                "tileResolution": 512,
+                "maxLevel": 4,
+                "cubeResolution": 2544
+            },
+            "hotSpots": []
+        },
+        "7": {
+            "title": "7",
+            "type": "multires",
+            "multiRes": {
+                "path": "tiles/7/%l/%s%y_%x",
+                "fallbackPath": "tiles/7/fallback/%s",
+                "extension": "jpg",
+                "tileResolution": 512,
+                "maxLevel": 4,
+                "cubeResolution": 2544
+            },
+            "hotSpots": []
+        },
+        "8": {
+            "title": "8",
+            "type": "multires",
+            "multiRes": {
+                "path": "tiles/8/%l/%s%y_%x",
+                "fallbackPath": "tiles/8/fallback/%s",
+                "extension": "jpg",
+                "tileResolution": 512,
+                "maxLevel": 4,
+                "cubeResolution": 2544
+            },
+            "hotSpots": []
+        }
+    }
+}
