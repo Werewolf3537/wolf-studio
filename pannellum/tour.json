@@ -3,13 +3,12 @@
         "firstScene": "1",
         "sceneFadeDuration": 1000,
         "autoLoad": true,
-        "hotSpotDebug": true,
+        "hotSpotDebug": false,
         "orientationOnByDefault": true,
 	"showControls": false
     },
     "scenes": {
         "1": {
-            "title": "1",
             "type": "multires",
             "pitch": -7,
             "yaw": -68,
@@ -26,7 +25,6 @@
            		 "pitch": -29,         
             		 "yaw": -83,            
            		 "type": "scene",
-           		 "text": "2",    
            		 "sceneId": "2",    
            		 "targetPitch": "same",
            		 "targetYaw": "same"
@@ -35,7 +33,6 @@
            		 "pitch": -20,         
             		 "yaw": -49,            
            		 "type": "scene",
-           		 "text": "3",    
            		 "sceneId": "3",    
            		 "targetPitch": "same",
            		 "targetYaw": "same"
@@ -44,7 +41,6 @@
         },
 
         "2": {
-            "title": "2",
             "type": "multires",
             "multiRes": {
                 "path": "tiles/2/%l/%s%y_%x",
@@ -59,7 +55,6 @@
            		 "pitch": -26,         
             		 "yaw": 86,            
            		 "type": "scene",
-           		 "text": "1",    
            		 "sceneId": "1",    
            		 "targetPitch": "same",
            		 "targetYaw": "same"
@@ -68,7 +63,6 @@
            		 "pitch": -30,         
             		 "yaw": 14,            
            		 "type": "scene",
-           		 "text": "3",    
            		 "sceneId": "3",    
            		 "targetPitch": "same",
            		 "targetYaw": "same"
@@ -77,7 +71,6 @@
         },
 
         "3": {
-            "title": "3",
             "type": "multires",
             "multiRes": {
                 "path": "tiles/3/%l/%s%y_%x",
@@ -92,7 +85,6 @@
            		 "pitch": -34,         
             		 "yaw": -177,            
            		 "type": "scene",
-           		 "text": "2",    
            		 "sceneId": "2",    
            		 "targetPitch": "same",
            		 "targetYaw": "same"
@@ -101,7 +93,6 @@
            		 "pitch": -37,         
             		 "yaw": 88,            
            		 "type": "scene",
-           		 "text": "4",    
            		 "sceneId": "4",    
            		 "targetPitch": "same",
            		 "targetYaw": "same"
@@ -111,7 +102,6 @@
 
 
         "4": {
-            "title": "4",
             "type": "multires",
             "multiRes": {
                 "path": "tiles/4/%l/%s%y_%x",
