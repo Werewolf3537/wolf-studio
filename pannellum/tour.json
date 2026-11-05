@@ -5,7 +5,8 @@
         "autoLoad": true,
         "hotSpotDebug": false,
         "orientationOnByDefault": false,
-	"showControls": false
+	"showControls": false,
+	"hfov": 80
     },
     "scenes": {
         "1": {
