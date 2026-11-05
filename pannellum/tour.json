@@ -6,9 +6,9 @@
         "orientationOnByDefault": false,
         "showControls": false,
         "dynamicUpdate": false,
-        "hfov": 80,
+        "hfov": 90,
         "minHfov": 65,
-        "maxHfov": 90,
+        "maxHfov": 140,
         "multiResMinHfov": true,
         "tileCacheLimit": 15
     },
