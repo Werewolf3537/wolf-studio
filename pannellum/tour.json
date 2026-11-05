@@ -6,7 +6,10 @@
         "hotSpotDebug": false,
         "orientationOnByDefault": false,
 	"showControls": false,
-	"hfov": 80
+        "hfov": 80,           
+        "minHfov": 65,        
+        "maxHfov": 90,        
+        "multiResMinHfov": true
     },
     "scenes": {
         "1": {
