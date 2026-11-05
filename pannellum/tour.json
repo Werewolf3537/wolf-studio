@@ -4,7 +4,7 @@
         "sceneFadeDuration": 1000,
         "autoLoad": true,
         "hotSpotDebug": false,
-        "orientationOnByDefault": true,
+        "orientationOnByDefault": false,
 	"showControls": false
     },
     "scenes": {
