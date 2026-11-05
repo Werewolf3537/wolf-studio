@@ -28,7 +28,6 @@
             pointer-events: none !important;
         }
     </style>
-
 </head>
 <body>
 
@@ -52,14 +51,18 @@
     <!-- Кнопка и контейнер мини-карты -->
     <button class="map-toggle-btn" onclick="toggleMap()">🗺️ Карта</button>
     <div class="minimap-container" id="miniMap">
-        <img src="images/plan.png" alt="Планировка" class="minimap-img">
+        <!-- Картинка автоматически сгенерируется внутри скрипта minimap.js -->
     </div>
 
     <!-- Область 3D-тура -->
     <div id="panorama-container"></div>
 
+    <!-- Подключение библиотек Pannellum -->
     <script src="js/libpannellum.js"></script>
     <script src="js/pannellum.js"></script>
+
+    <!-- Подключаем наш изолированный файл мини-карты (ОБЯЗАТЕЛЬНО ПЕРЕД НАШИМ СКРИПТОМ ИНИЦИАЛИЗАЦИИ) -->
+    <script src="minimap.js"></script>
 
     <script>
         let viewer = null;
@@ -69,16 +72,21 @@
         fetch('tour.json')
             .then(response => response.json())
             .then(config => {
-                // Инициализируем плеер и сохраняем ссылку в переменную viewer
+                // Инициализируем плеер и сохраняем ссылку в глобальную переменную viewer
                 viewer = pannellum.viewer('panorama-container', config);
                 document.getElementById('project-title').innerText = config.projectTitle || "Мой 3D Тур";
+
+                // ЧИНИМ КАРТУ: Запускаем мини-карту строго ПОСЛЕ того, как плеер успешно создался из JSON!
+                if (typeof initMinimap === 'function') {
+                    initMinimap(viewer);
+                }
             })
             .catch(error => {
-                console.error('Ошибка:', error);
+                console.error('Ошибка загрузки конфигурации:', error);
                 alert('Не удалось загрузить tour.json');
             });
 
-        // 2. Умная логика управления Гироскопом
+        // 2. Логика управления Гироскопом
         function toggleGyro() {
             if (!viewer) return;
 
@@ -86,34 +94,25 @@
             isGyroActive = !isGyroActive;
 
             if (isGyroActive) {
-                // Включаем гироскоп в Pannellum
                 viewer.startOrientation();
                 btn.innerText = "📱 Гироскоп: Вкл";
                 btn.classList.add('active');
 
-                // Включаем жесткую блокировку ручного вращения (но хотспоты кликаются)
-                viewer.setMouseZoom(false); // Отключаем зум колесиком/щипком на время гироскопа
-                
-                // Чтобы заблокировать перетаскивание мышкой/пальцем, подменяем внутренние параметры лимитов
+                viewer.setMouseZoom(false); 
                 viewer.getConfig().draggable = false;
                 
-                // Переопределяем дефолтный сброс Pannellum при клике
-                // Каждые 100мс принудительно удерживаем гироскоп активным, если разработчики пытаются его потушить
                 window.gyroInterval = setInterval(() => {
                     if(viewer && isGyroActive) viewer.startOrientation();
                 }, 100);
 
             } else {
-                // Выключаем гироскоп
                 viewer.stopOrientation();
                 btn.innerText = "📱 Гироскоп: Выкл";
                 btn.classList.remove('active');
 
-                // Возвращаем полноценное ручное управление
                 viewer.setMouseZoom(true);
                 viewer.getConfig().draggable = true;
                 
-                // Очищаем интерьер удержания
                 clearInterval(window.gyroInterval);
             }
         }
@@ -127,37 +126,14 @@
             document.getElementById('miniMap').classList.toggle('active');
         }
 
-        // 3.2. Умное закрытие меню при начале вращения панорамы
+        // 3.2. Закрытие меню при начале вращения панорамы
         const closeMenu = () => {
             document.getElementById('projectsMenu').classList.remove('active');
         };
 
-        // Работает и при клике мышкой на ПК, и при первом касании пальцем на смартфоне
         document.getElementById('panorama-container').addEventListener('click', closeMenu);
         document.getElementById('panorama-container').addEventListener('touchstart', closeMenu);
-
     </script>
-
-<!-- Подключаем наш изолированный файл мини-карты -->
-<script src="minimap.js"></script>
-
-<script>
-    // Твоя обычная инициализация тура
-    const viewer = pannellum.viewer('panorama-container', {
-        "default": {
-            "firstScene": "1",
-            "autoLoad": true
-            // ... остальные твои настройки из JSON
-        },
-        "scenes": {
-            // ... твои сцены
-        }
-    });
-
-    // ОДНА СТРОЧКА: Запускаем мини-карту и передаем ей плеер
-    initMinimap(viewer);
-</script>
-
 
 </body>
 </html>
