@@ -1,7 +1,7 @@
 {
     "default": {
         "firstScene": "1",
-        "sceneFadeDuration": 1000,
+        "sceneFadeDuration": 1600,
         "autoLoad": true,
         "hotSpotDebug": false,
         "orientationOnByDefault": true,
