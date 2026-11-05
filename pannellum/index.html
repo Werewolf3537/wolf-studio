@@ -6,6 +6,29 @@
     <title>3D Виртуальный Тур</title>
     <link rel="stylesheet" href="css/pannellum.css">
     <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        /* Жесткое скрытие названия панорамы в левом нижнем углу */
+        .pnm-ui .pnm-title-box, 
+        #panorama-container .pnm-title-box,
+        .pnm-title-box {
+            display: none !important;
+            opacity: 0 !important;
+            visibility: hidden !important;
+            pointer-events: none !important;
+        }
+
+        /* Полное уничтожение компаса на смартфонах */
+        .pnm-ui .pnm-compass,
+        #panorama-container .pnm-compass,
+        .pnm-compass {
+            display: none !important;
+            opacity: 0 !important;
+            visibility: hidden !important;
+            pointer-events: none !important;
+        }
+    </style>
+
 </head>
 <body>
 
