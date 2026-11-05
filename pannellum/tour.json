@@ -1,7 +1,7 @@
 {
     "default": {
         "firstScene": "1",
-        "sceneFadeDuration": 1600,
+        "sceneFadeDuration": 1000,
         "autoLoad": true,
         "hotSpotDebug": false,
         "orientationOnByDefault": true,
@@ -14,7 +14,7 @@
             "yaw": -68,
             "multiRes": {
                 "path": "tiles/1/%l/%s%y_%x",
-                "fallbackPath": "tiles/1/fallback/%s",
+                "fallbackPath": "tiles/1/fallback/%s.jpg",
                 "extension": "jpg",
                 "tileResolution": 512,
                 "maxLevel": 4,
@@ -44,7 +44,7 @@
             "type": "multires",
             "multiRes": {
                 "path": "tiles/2/%l/%s%y_%x",
-                "fallbackPath": "tiles/2/fallback/%s",
+                "fallbackPath": "tiles/2/fallback/%s.jpg",
                 "extension": "jpg",
                 "tileResolution": 512,
                 "maxLevel": 4,
@@ -74,7 +74,7 @@
             "type": "multires",
             "multiRes": {
                 "path": "tiles/3/%l/%s%y_%x",
-                "fallbackPath": "tiles/3/fallback/%s",
+                "fallbackPath": "tiles/3/fallback/%s.jpg",
                 "extension": "jpg",
                 "tileResolution": 512,
                 "maxLevel": 4,
@@ -105,7 +105,7 @@
             "type": "multires",
             "multiRes": {
                 "path": "tiles/4/%l/%s%y_%x",
-                "fallbackPath": "tiles/4/fallback/%s",
+                "fallbackPath": "tiles/4/fallback/%s.jpg",
                 "extension": "jpg",
                 "tileResolution": 512,
                 "maxLevel": 4,
@@ -118,7 +118,7 @@
             "type": "multires",
             "multiRes": {
                 "path": "tiles/5/%l/%s%y_%x",
-                "fallbackPath": "tiles/5/fallback/%s",
+                "fallbackPath": "tiles/5/fallback/%s.jpg",
                 "extension": "jpg",
                 "tileResolution": 512,
                 "maxLevel": 4,
@@ -131,7 +131,7 @@
             "type": "multires",
             "multiRes": {
                 "path": "tiles/6/%l/%s%y_%x",
-                "fallbackPath": "tiles/6/fallback/%s",
+                "fallbackPath": "tiles/6/fallback/%s.jpg",
                 "extension": "jpg",
                 "tileResolution": 512,
                 "maxLevel": 4,
@@ -144,7 +144,7 @@
             "type": "multires",
             "multiRes": {
                 "path": "tiles/7/%l/%s%y_%x",
-                "fallbackPath": "tiles/7/fallback/%s",
+                "fallbackPath": "tiles/7/fallback/%s.jpg",
                 "extension": "jpg",
                 "tileResolution": 512,
                 "maxLevel": 4,
@@ -157,7 +157,7 @@
             "type": "multires",
             "multiRes": {
                 "path": "tiles/8/%l/%s%y_%x",
-                "fallbackPath": "tiles/8/fallback/%s",
+                "fallbackPath": "tiles/8/fallback/%s.jpg",
                 "extension": "jpg",
                 "tileResolution": 512,
                 "maxLevel": 4,
