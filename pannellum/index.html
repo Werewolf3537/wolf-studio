@@ -138,5 +138,26 @@
 
     </script>
 
+<!-- Подключаем наш изолированный файл мини-карты -->
+<script src="minimap.js"></script>
+
+<script>
+    // Твоя обычная инициализация тура
+    const viewer = pannellum.viewer('panorama-container', {
+        "default": {
+            "firstScene": "1",
+            "autoLoad": true
+            // ... остальные твои настройки из JSON
+        },
+        "scenes": {
+            // ... твои сцены
+        }
+    });
+
+    // ОДНА СТРОЧКА: Запускаем мини-карту и передаем ей плеер
+    initMinimap(viewer);
+</script>
+
+
 </body>
 </html>
