@@ -6,7 +6,7 @@
         "hotSpotDebug": false,
         "orientationOnByDefault": false,
 	"showControls": false,
-        "hfov": 80,           
+        "hfov": 60,           
         "minHfov": 65,        
         "maxHfov": 90,        
         "multiResMinHfov": true
