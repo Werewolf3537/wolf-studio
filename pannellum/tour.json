@@ -19,9 +19,9 @@
                 "path": "tiles/1/%l/%s%y_%x",
                 "fallbackPath": "tiles/1/fallback/%s.jpg",
                 "extension": "jpg",
-                "tileResolution": 512,
+                "tileResolution": 256,
                 "maxLevel": 4,
-                "cubeResolution": 2544
+                "cubeResolution": 2048
             },
             "hotSpots": [
                 {
@@ -50,9 +50,9 @@
                 "path": "tiles/2/%l/%s%y_%x",
                 "fallbackPath": "tiles/2/fallback/%s.jpg",
                 "extension": "jpg",
-                "tileResolution": 512,
+                "tileResolution": 256,
                 "maxLevel": 4,
-                "cubeResolution": 2544
+                "cubeResolution": 2048
             },
             "hotSpots": [
                 {
@@ -81,9 +81,9 @@
                 "path": "tiles/3/%l/%s%y_%x",
                 "fallbackPath": "tiles/3/fallback/%s.jpg",
                 "extension": "jpg",
-                "tileResolution": 512,
+                "tileResolution": 256,
                 "maxLevel": 4,
-                "cubeResolution": 2544
+                "cubeResolution": 2048
             },
             "hotSpots": [
                 {
@@ -112,9 +112,9 @@
                 "path": "tiles/4/%l/%s%y_%x",
                 "fallbackPath": "tiles/4/fallback/%s.jpg",
                 "extension": "jpg",
-                "tileResolution": 512,
+                "tileResolution": 256,
                 "maxLevel": 4,
-                "cubeResolution": 2544
+                "cubeResolution": 2048
             },
             "hotSpots": [
                 {
@@ -143,9 +143,9 @@
                 "path": "tiles/5/%l/%s%y_%x",
                 "fallbackPath": "tiles/5/fallback/%s.jpg",
                 "extension": "jpg",
-                "tileResolution": 512,
+                "tileResolution": 256,
                 "maxLevel": 4,
-                "cubeResolution": 2544
+                "cubeResolution": 2048
             },
             "hotSpots": [
                 {
@@ -174,9 +174,9 @@
                 "path": "tiles/6/%l/%s%y_%x",
                 "fallbackPath": "tiles/6/fallback/%s.jpg",
                 "extension": "jpg",
-                "tileResolution": 512,
+                "tileResolution": 256,
                 "maxLevel": 4,
-                "cubeResolution": 2544
+                "cubeResolution": 2048
             },
             "hotSpots": [
                 {
@@ -205,9 +205,9 @@
                 "path": "tiles/7/%l/%s%y_%x",
                 "fallbackPath": "tiles/7/fallback/%s.jpg",
                 "extension": "jpg",
-                "tileResolution": 512,
+                "tileResolution": 256,
                 "maxLevel": 4,
-                "cubeResolution": 2544
+                "cubeResolution": 2048
             },
             "hotSpots": [
                 {
@@ -236,9 +236,9 @@
                 "path": "tiles/8/%l/%s%y_%x",
                 "fallbackPath": "tiles/8/fallback/%s.jpg",
                 "extension": "jpg",
-                "tileResolution": 512,
+                "tileResolution": 256,
                 "maxLevel": 4,
-                "cubeResolution": 2544
+                "cubeResolution": 2048
             },
             "hotSpots": [
                 {
