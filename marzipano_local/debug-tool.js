@@ -1,5 +1,5 @@
 // ==========================================================
-// ПРОФЕССИОНАЛЬНЫЙ ИНСТРУМЕНТ ОТЛАДКИ И ГИРОСКОПА ДЛЯ MARZIPANO
+// НАТИВНЫЙ ИНСТРУМЕНТ ОТЛАДКИ И ГИРОСКОПА С АВТОКАЛИБРОВКОЙ
 // ==========================================================
 var DEBUG_MODE = false; // true - прицел и снятие координат по клику на ПК
 var ENABLE_GYRO = true; // true - активировать нативный гироскоп для смартфонов
@@ -69,12 +69,11 @@ var ENABLE_GYRO = true; // true - активировать нативный ги
     }, true);
   }
 
-  // Нативный метод интеграции гироскопа через Controls API Marzipano
+  // Нативный метод интеграции гироскопа с автоматическим подхватом углов
   function initNativeMarzipanoGyro(marzipanoViewer, container) {
     if (typeof window.DeviceOrientationEvent === 'undefined') return;
     if (!/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) return;
 
-    // Стили интерфейса кнопки в углу экрана
     var gyroStyle = document.createElement('style');
     gyroStyle.innerHTML = `
       #gyro-toggle-btn {
@@ -93,11 +92,14 @@ var ENABLE_GYRO = true; // true - активировать нативный ги
     gyroBtn.innerHTML = '🧭'; 
     container.appendChild(gyroBtn);
 
-    // Создаем кастомный класс управления для Controls Marzipano
     function CustomGyroControlMethod() {
-      this._parameters = { yaw: 0, pitch: 0 };
       this._active = false;
+      this._calibrated = false;
       this._handler = this._handleOrientation.bind(this);
+      
+      // Смещения осей (калибровка)
+      this._offsetX = 0;
+      this._offsetY = 0;
     }
 
     CustomGyroControlMethod.prototype.init = function(callback) {
@@ -106,36 +108,68 @@ var ENABLE_GYRO = true; // true - активировать нативный ги
 
     CustomGyroControlMethod.prototype._handleOrientation = function(event) {
       if (!this._active) return;
-      var alpha = event.alpha, beta = event.beta, gamma = event.gamma;
+      
+      var alpha = event.alpha; // Компас (0 - 360)
+      var beta = event.beta;   // Наклон вперед/назад (-180 - 180)
+      var gamma = event.gamma; // Наклон влево/вправо (-90 - 90)
+      
       if (alpha === null || beta === null || gamma === null) return;
 
-      // Рассчитываем чистую скорость без задержек WebGL
-      var scale = 0.02; // Скорость отклика движения
-      var yawVelocity = 0, pitchVelocity = 0;
+      var view = marzipanoViewer.view();
+      if (!view) return;
 
-      if (window.orientation === 90) {
-        yawVelocity = gamma * scale; pitchVelocity = -beta * scale;
-      } else if (window.orientation === -90) {
-        yawVelocity = -gamma * scale; pitchVelocity = beta * scale;
+      // Текущая ориентация экрана (портрет или ландшафт)
+      var screenOrientation = window.orientation || 0;
+
+      // Переводим текущие физические углы смартфона в радианы
+      var currentX = beta * Math.PI / 180;
+      var currentY = 0;
+
+      if (screenOrientation === 90) {
+        currentY = -beta * Math.PI / 180;
+        currentX = -gamma * Math.PI / 180;
+      } else if (screenOrientation === -90) {
+        currentY = beta * Math.PI / 180;
+        currentX = gamma * Math.PI / 180;
       } else {
-        yawVelocity = -gamma * scale; pitchVelocity = -beta * scale;
+        currentY = -gamma * Math.PI / 180;
+        currentX = -beta * Math.PI / 180;
       }
 
-      // Передаем импульсы скорости во внутренний цикл Marzipano (Friction/Ускорение)
+      // ИСПРАВЛЕНИЕ: Автоматическая калибровка в самый первый кадр получения данных датчика
+      if (!this._calibrated) {
+        this._offsetX = view.pitch() - currentX;
+        this._offsetY = view.yaw() - currentY;
+        this._calibrated = true;
+        return;
+      }
+
+      // Вычисляем целевые относительные координаты взгляда на основе калибровки
+      var targetPitch = currentX + this._offsetX;
+      var targetYaw = currentY + this._offsetY;
+
+      // Ограничиваем вертикальный взгляд (pitch), чтобы камеру не выворачивало наизнанку на полюсах куба
+      targetPitch = Math.max(-Math.PI / 2 + 0.05, Math.min(Math.PI / 2 - 0.05, targetPitch));
+
+      // Вычисляем необходимый импульс скорости для плавного движения в ядре Marzipano
+      var pitchVelocity = (targetPitch - view.pitch()) * 0.25;
+      var yawVelocity = (targetYaw - view.yaw()) * 0.25;
+
       this._callback(null, { yaw: yawVelocity, pitch: pitchVelocity });
     };
 
     CustomGyroControlMethod.prototype.enable = function() {
       this._active = true;
+      this._calibrated = false; // Принудительно сбрасываем калибровку для нового подхвата по клику
       window.addEventListener('deviceorientation', this._handler, true);
     };
 
     CustomGyroControlMethod.prototype.disable = function() {
       this._active = false;
+      this._calibrated = false;
       window.removeEventListener('deviceorientation', this._handler, true);
     };
 
-    // Регистрируем наш метод в официальном ядре управления плеера
     var controls = marzipanoViewer.controls();
     var gyroMethod = new CustomGyroControlMethod();
     controls.registerMethod('deviceOrientation', gyroMethod);
@@ -149,6 +183,8 @@ var ENABLE_GYRO = true; // true - активировать нативный ги
         gyroBtn.innerHTML = '🧭';
         gyroEnabled = false;
       } else {
+        // Перед включением фиксируем текущее положение панорамы
+        gyroMethod._calibrated = false; 
         controls.enableMethod('deviceOrientation');
         gyroBtn.classList.add('active');
         gyroBtn.innerHTML = '📱';
