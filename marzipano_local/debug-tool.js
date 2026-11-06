@@ -1,8 +1,8 @@
 // ==========================================================
 // АВТОНОМНЫЙ ИНСТРУМЕНТ ОТЛАДКИ И ГИРОСКОПА С КНОПКОЙ УПРАВЛЕНИЯ
 // ==========================================================
-var DEBUG_MODE = false;  // true - прицел и координаты на ПК включены, false - выключены
-var ENABLE_GYRO = true; // true - активировать модуль гироскопа для смартфонов
+var DEBUG_MODE = false;  // Поменяйте на true, если снова нужен прицел и снятие координат по клику на ПК
+var ENABLE_GYRO = true; // true - активировать модуль гироскопа для смартфонов, false - полностью скрыть
 
 (function() {
   if (!DEBUG_MODE && !ENABLE_GYRO) return;
@@ -76,37 +76,41 @@ var ENABLE_GYRO = true; // true - активировать модуль гиро
     }, true);
   }
 
-  // ИСПРАВЛЕНО: Заменен некорректный 'def' на правильный JS-синтаксис 'function'
+  // СИНТАКСИС ИСПРАВЛЕН: 'def' заменен на 'function'
   function initLocalGyroscope(marzipanoViewer, container) {
     var deviceOrientationSupported = typeof window.DeviceOrientationEvent !== 'undefined';
     if (!deviceOrientationSupported) return;
 
-    // Внедряем стили кнопки гироскопа СТРОГО ПО ЦЕНТРУ ЭКРАНА для теста
+    var isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    if (!isMobile) return;
+
+    // Стили кнопки (Поставил аккуратно в верхний правый угол, чтобы не мешала)
     var gyroStyle = document.createElement('style');
     gyroStyle.innerHTML = `
       #gyro-toggle-btn {
         position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 70px;
-        height: 70px;
-        background: rgba(255, 0, 0, 0.8); /* Сделали её КРАСНОЙ и крупной, чтоб точно заметить */
-        border: 3px solid #fff;
+        top: 20px;
+        right: 20px;
+        width: 45px;
+        height: 45px;
+        background: rgba(0, 0, 0, 0.6);
+        border: 2px solid rgba(255, 255, 255, 0.7);
         border-radius: 50%;
         color: #fff;
-        font-size: 30px;
+        font-size: 20px;
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
         z-index: 10001;
         transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
       }
       #gyro-toggle-btn.active {
-        background: #00ff00; /* При включении горит ЗЕЛЕНЫМ */
-        box-shadow: 0 0 25px rgba(0, 255, 0, 0.8);
+        background: #00ff00;
+        border-color: #fff;
+        color: #000;
+        box-shadow: 0 0 15px rgba(0, 255, 0, 0.6);
       }
     `;
     document.head.appendChild(gyroStyle);
@@ -151,7 +155,7 @@ var ENABLE_GYRO = true; // true - активировать модуль гиро
         deltaPitch = (gamma - lastGamma) * Math.PI / 180;
       }
 
-      // ИСПРАВЛЕНО: Установлена честная скорость 1.0 (повторяет движения рук)
+      // Чувствительность выставлена на честные 1.0 (идеальное следование за руками)
       view.setYaw(view.yaw() - deltaYaw * 1.0);
       view.setPitch(view.pitch() - deltaPitch * 1.0);
 
