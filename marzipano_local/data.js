@@ -1,50 +1,8 @@
 var APP_DATA = {
   "scenes": [
     {
-      "id": "scene_0",
-      "name": "Bath",
-      "mapCoords": {
-        "left": "50%",
-        "top": "50%"
-      },
-      "levels": [
-        {
-          "tileSize": 256,
-          "size": 256,
-          "fallbackOnly": true
-        },
-        {
-          "tileSize": 512,
-          "size": 512
-        },
-        {
-          "tileSize": 512,
-          "size": 1024
-        },
-        {
-          "tileSize": 512,
-          "size": 2048
-        }
-      ],
-      "faceSize": 2048,
-      "initialViewParameters": {
-        "yaw": 0.0,
-        "pitch": 0.0,
-        "fov": 1.2
-      },
-      "linkHotspots": [
-        {
-          "yaw": 0.0,
-          "pitch": 0.0,
-          "rotation": 0,
-          "target": "scene_1"
-        }
-      ],
-      "infoHotspots": []
-    },
-    {
-      "id": "scene_1",
-      "name": "Bedroom", 
+      "id": "1",
+      "name": "гостичная",
       "mapCoords": {
         "left": "50%",
         "top": "50%"
@@ -79,20 +37,20 @@ var APP_DATA = {
           "yaw": -0.5236,
           "pitch": 0.0,
           "rotation": 0,
-          "target": "scene_0"
+          "target": "5"
         },
         {
           "yaw": 0.0,
           "pitch": 0.0,
           "rotation": 0,
-          "target": "scene_2"
+          "target": "2"
         }
       ],
       "infoHotspots": []
     },
     {
-      "id": "scene_2",
-      "name": "Hallway_1",
+      "id": "2",
+      "name": "жральня",
       "mapCoords": {
         "left": "50%",
         "top": "50%"
@@ -127,20 +85,20 @@ var APP_DATA = {
           "yaw": -0.5236,
           "pitch": 0.0,
           "rotation": 0,
-          "target": "scene_1"
+          "target": "1"
         },
         {
           "yaw": 0.0,
           "pitch": 0.0,
           "rotation": 0,
-          "target": "scene_3"
+          "target": "3"
         }
       ],
       "infoHotspots": []
     },
     {
-      "id": "scene_3",
-      "name": "Hallway_2",
+      "id": "3",
+      "name": "лежебочная",
       "mapCoords": {
         "left": "50%",
         "top": "50%"
@@ -175,20 +133,20 @@ var APP_DATA = {
           "yaw": -0.5236,
           "pitch": 0.0,
           "rotation": 0,
-          "target": "scene_2"
+          "target": "2"
         },
         {
           "yaw": 0.0,
           "pitch": 0.0,
           "rotation": 0,
-          "target": "scene_4"
+          "target": "4"
         }
       ],
       "infoHotspots": []
     },
     {
-      "id": "scene_4",
-      "name": "Kitchen",
+      "id": "4",
+      "name": "помоичная",
       "mapCoords": {
         "left": "50%",
         "top": "50%"
@@ -223,20 +181,20 @@ var APP_DATA = {
           "yaw": -0.5236,
           "pitch": 0.0,
           "rotation": 0,
-          "target": "scene_3"
+          "target": "3"
         },
         {
           "yaw": 0.0,
           "pitch": 0.0,
           "rotation": 0,
-          "target": "scene_5"
+          "target": "5"
         }
       ],
       "infoHotspots": []
     },
     {
-      "id": "scene_5",
-      "name": "Living",
+      "id": "5",
+      "name": "сральня",
       "mapCoords": {
         "left": "50%",
         "top": "50%"
@@ -271,7 +229,13 @@ var APP_DATA = {
           "yaw": -0.5236,
           "pitch": 0.0,
           "rotation": 0,
-          "target": "scene_4"
+          "target": "4"
+        },
+        {
+          "yaw": 0.0,
+          "pitch": 0.0,
+          "rotation": 0,
+          "target": "1"
         }
       ],
       "infoHotspots": []

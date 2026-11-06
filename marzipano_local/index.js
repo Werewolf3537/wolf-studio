@@ -67,14 +67,8 @@
     }
   };
 
-
-
   // Initialize viewer.
   var viewer = new Marzipano.Viewer(panoElement, viewerOpts);
-
-// ДОБАИЛ ДЛЯ ПРИЦЕЛА И ИНИЦИАЛИЗАЦИИ КООРДИНАТ:
-window.viewer = viewer; 
-
 
   // Create scenes.
   var scenes = data.scenes.map(function(data) {
@@ -84,7 +78,7 @@ window.viewer = viewer;
       { cubeMapPreviewUrl: urlPrefix + "/" + data.id + "/preview.jpg" });
     var geometry = new Marzipano.CubeGeometry(data.levels);
 
-    var limiter = Marzipano.RectilinearView.limit.traditional(data.faceSize, 100*Math.PI/180, 145*Math.PI/180);
+    var limiter = Marzipano.RectilinearView.limit.traditional(data.faceSize, 100*Math.PI/180, 120*Math.PI/180);
     var view = new Marzipano.RectilinearView(data.initialViewParameters, limiter);
 
     var scene = viewer.createScene({
@@ -151,7 +145,6 @@ window.viewer = viewer;
     showSceneList();
   }
 
-  /*
   // Set handler for scene switch.
   scenes.forEach(function(scene) {
     var el = document.querySelector('#sceneList .scene[data-id="' + scene.data.id + '"]');
@@ -163,7 +156,6 @@ window.viewer = viewer;
       }
     });
   });
-  */
 
   // DOM elements for view controls.
   var viewUpElement = document.querySelector('#viewUp');
@@ -191,59 +183,27 @@ window.viewer = viewer;
   }
 
   function switchScene(scene) {
-    var currentView = viewer.view();
-    var savedYaw = currentView ? currentView.yaw() : null;
-    var savedPitch = currentView ? currentView.pitch() : null;
-    var savedFov = currentView ? currentView.fov() : null;
-
     stopAutorotate();
-    
+    scene.view.setParameters(scene.data.initialViewParameters);
     scene.scene.switchTo();
-    
-    setTimeout(function() {
-      var newView = viewer.view();
-      if (newView && savedYaw !== null) {
-        newView.setParameters({
-          yaw: savedYaw,
-          pitch: savedPitch,
-          fov: savedFov
-        });
-      }
-    }, 50);
-
     startAutorotate();
     updateSceneName(scene);
-    
-    // Переносим точку и временно прячем луч и точку от рывков
-    if (scene.data && scene.data.mapCoords) {
-      var mapDot = document.getElementById('mini-map-dot');
-      if (mapDot) {
-        mapDot.classList.add('switching'); // Точка и луч начинают плавно растворяться (0.2с)
-        
-        // Переносим координаты на плане с микро-задержкой в 150мс, когда точка УЖЕ стала невидимой
-        setTimeout(function() {
-          mapDot.style.left = scene.data.mapCoords.left;
-          mapDot.style.top = scene.data.mapCoords.top;
-        }, 150);
-      }
-    }
-    
-    // Плавное проявление точки на новом месте, когда панорама полностью зафиксирована
-    setTimeout(function() {
-      var mapDot = document.getElementById('mini-map-dot');
-      if (mapDot) {
-        mapDot.classList.remove('switching'); // Маркер красиво и мягко загорается на новом месте
-      }
-    }, 300); // Увеличили общую паузу до 300мс для идеально мягкого эффекта кино
+    updateSceneList(scene);
   }
 
-
   function updateSceneName(scene) {
-    sceneNameElement.innerHTML = "Квартира 2-к 50м2 г.Новокузнецк ЖК Кузнецова  |  Кирилл Бахарев";
+    sceneNameElement.innerHTML = sanitize(scene.data.name);
   }
 
   function updateSceneList(scene) {
-    // Функция теперь пустая, она ничего не считывает и не выделяет строки
+    for (var i = 0; i < sceneElements.length; i++) {
+      var el = sceneElements[i];
+      if (el.getAttribute('data-id') === scene.data.id) {
+        el.classList.add('current');
+      } else {
+        el.classList.remove('current');
+      }
+    }
   }
 
   function showSceneList() {
@@ -428,45 +388,5 @@ window.viewer = viewer;
 
   // Display the initial scene.
   switchScene(scenes[0]);
-
-  hideSceneList();
-
-  // НАШ ОБНОВЛЕННЫЙ БЛОК: Только вращение луча радара (без рывков координат!)
-  viewer.addEventListener('viewChange', function() {
-    var currentScene = viewer.scene();
-    var mapDot = document.getElementById('mini-map-dot');
-    
-    if (currentScene && mapDot) {
-      var liveView = currentScene.view();
-      if (!liveView) return;
-      
-      // Считаем угол и крутим белый луч на месте, не двигая координаты туда-сюда
-      var yaw = liveView.yaw();
-      var degrees = yaw * (180 / Math.PI);
-      // ИСПРАВЛЕНИЕ: Добавили + 180 прямо внутрь строки поворота
-      mapDot.style.transform = 'translate(-50%, -50%) rotate(' + (degrees + 270) + 'deg)';
-    }
-  });
-
-  // НАШ ФИНАЛЬНЫЙ БЛОК: Логика развёртывания и свёртывания мини-карты
-  var mapOpenBtn = document.getElementById('mini-map-toggle-btn');
-  var mapWrapper = document.getElementById('mini-map-wrapper');
-  var mapCloseBtn = document.getElementById('mini-map-close-btn');
-
-  if (mapOpenBtn && mapWrapper && mapCloseBtn) {
-    // НАЖАЛИ «КАРТА»: скрываем кнопку, плавно проявляем планировку
-    mapOpenBtn.addEventListener('click', function(event) {
-      event.stopPropagation(); // Защита, чтобы панорама не дергалась при клике
-      mapOpenBtn.classList.add('hidden-state');
-      mapWrapper.classList.add('active-state');
-    });
-
-    // НАЖАЛИ НА КРЕСТИК: скрываем планировку, возвращаем кнопку обратно
-    mapCloseBtn.addEventListener('click', function(event) {
-      event.stopPropagation();
-      mapWrapper.classList.remove('active-state');
-      mapOpenBtn.classList.remove('hidden-state');
-    });
-  }
 
 })();
