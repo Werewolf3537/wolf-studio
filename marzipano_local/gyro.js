@@ -8,9 +8,11 @@
   let baseAlpha = 0;
   let baseBeta = 0;
 
-  // Текущие смещения, которые мы будем отдавать в Marzipano
-  let currentYaw = 0;
-  let currentPitch = 0;
+  // Начальный взгляд камеры перед включением гироскопа
+  let startYaw = 0;
+  let startPitch = 0;
+
+  let viewerInstance = null;
 
   // 1. Создаем кнопку на экране
   const gyroBtn = document.createElement('button');
@@ -31,124 +33,102 @@
   gyroBtn.style.userSelect = 'none';
   document.body.appendChild(gyroBtn);
 
-  // 2. Создаем кастомный метод управления для Marzipano
-  // Это позволит гироскопу работать плавно и параллельно с тач-скрином
-  function GyroControlMethod() {
-    this._v = { yaw: 0, pitch: 0 };
+  // 2. Функция поиска инстанса Marzipano Viewer
+  function getViewer() {
+    if (window.viewer) return window.viewer;
+    if (viewerInstance) return viewerInstance;
+    return null;
   }
-  
-  GyroControlMethod.prototype.createControlParameters = function(parameters) {
-    // Регистрируем параметры, которыми хотим управлять
-    parameters.register('yaw', 'relative', new Marzipano.ParameterDynamics());
-    parameters.register('pitch', 'relative', new Marzipano.ParameterDynamics());
-  };
 
-  GyroControlMethod.prototype.getControlValues = function(values) {
-    // Отдаем изменения и сразу сбрасываем, так как тип управления 'relative' (относительный)
-    values.yaw = this._v.yaw;
-    values.pitch = this._v.pitch;
-    this._v.yaw = 0;
-    this._v.pitch = 0;
-  };
-
-  // Создаем инстанс нашего метода управления
-  const gyroControlMethod = new GyroControlMethod();
+  // Перехватываем создание Viewer, если gyro.js загрузился раньше основного скрипта
+  if (typeof Marzipano !== 'undefined' && Marzipano.Viewer) {
+    const originalViewer = Marzipano.Viewer;
+    Marzipano.Viewer = function(...args) {
+      const instance = new originalViewer(...args);
+      viewerInstance = instance;
+      return instance;
+    };
+  }
 
   // 3. Функция обработки датчика
   function handleOrientation(event) {
     if (!isGyroActive) return;
     if (event.alpha === null || event.beta === null) return;
 
-    // Фиксируем положение телефона в самый первый момент включения
+    const viewer = getViewer();
+    if (!viewer) return;
+
+    const view = viewer.view();
+    if (!view) return;
+
+    // Фиксируем положение телефона и камеры в самый первый момент включения
     if (!firstFrameCaptured) {
       baseAlpha = event.alpha;
       baseBeta = event.beta;
+      
+      // Запоминаем, куда смотрела камера ДО включения гироскопа
+      startYaw = view.yaw();
+      startPitch = view.pitch();
+      
       firstFrameCaptured = true;
       return; 
     }
 
-    // Вычисляем разницу между стартовым и текущим положением
+    // Вычисляем разницу (смещение) относительно стартовой точки телефона
     let deltaAlpha = event.alpha - baseAlpha;
     let deltaBeta = event.beta - baseBeta;
 
-    // Корректируем прокрутку через 360 градусов
+    // Корректируем прокрутку через 360 градусов для горизонтальной оси
     if (deltaAlpha > 180) deltaAlpha -= 360;
     if (deltaAlpha < -180) deltaAlpha += 360;
 
-    // Переводим градусы в радианы
-    let targetYaw = (deltaAlpha * Math.PI) / 180;
-    let targetPitch = (deltaBeta * Math.PI) / 180;
+    // Переводим смещение из градусов в радианы
+    // Для alpha инвертируем знак (-), чтобы поворот телефона совпадал с поворотом камеры
+    let diffYaw = -(deltaAlpha * Math.PI) / 180;
+    let diffPitch = (deltaBeta * Math.PI) / 180;
 
-    // Вычисляем относительное изменение (шаг) для текущего кадра
-    gyroControlMethod._v.yaw = targetYaw - currentYaw;
-    gyroControlMethod._v.pitch = targetPitch - currentPitch;
+    // Складываем начальный взгляд камеры и смещение гироскопа
+    let targetYaw = startYaw + diffYaw;
+    let targetPitch = startPitch + diffPitch;
 
-    // Запоминаем текущую позицию для следующего шага
-    currentYaw = targetYaw;
-    currentPitch = targetPitch;
+    // Мягко обновляем координаты в Marzipano
+    view.setParameters({
+      yaw: targetYaw,
+      pitch: targetPitch
+    });
   }
 
-  // 4. Функция интеграции с Marzipano без глобальных переменных
-  function attachGyroToMarzipano() {
-    // Ищем контейнер тура. В стандартных шаблонах Marzipano это элемент с id="pano"
-    const panoEl = document.getElementById('pano') || document.querySelector('.pano');
-    
-    if (!panoEl) {
-      console.error('Контейнер Marzipano не найден. Убедитесь, что id="pano" существует.');
-      return false;
-    }
-
-    // Хак: ищем внутреннее свойство Marzipano, которое вешается на DOM-элемент при инициализации
-    // Обычно Marzipano сохраняет инстанс плеера или данные внутри элемента
-    // Если его нет, мы попробуем перехватить управление через дефолтный реестр
-    try {
-      // Инициализируем метод в системе управления Marzipano
-      const controls = window.viewer ? window.viewer.controls() : null;
-      
-      if (controls) {
-        controls.addMethod('gyro', gyroControlMethod);
-        return true;
-      } else {
-        // Если инициализация gyro.js произошла раньше, чем создался viewer,
-        // перехватываем конструктор плеера один раз
-        const originalViewer = Marzipano.Viewer;
-        Marzipano.Viewer = function(...args) {
-          const instance = new originalViewer(...args);
-          instance.controls().addMethod('gyro', gyroControlMethod);
-          window.__marzipanoGyroAttached = true;
-          return instance;
-        };
-        return true;
-      }
-    } catch (e) {
-      console.error('Не удалось привязать гироскоп к Marzipano:', e);
-      return false;
-    }
-  }
-
-  // 5. Переключение состояния (Старт/Стоп)
+  // 4. Переключение состояния (Старт/Стоп)
   function toggleGyroState() {
+    const viewer = getViewer();
+    if (!viewer) {
+      alert('Ошибка: Тур Marzipano еще не загрузился. Подождите секунду.');
+      return;
+    }
+
     isGyroActive = !isGyroActive;
     
     if (isGyroActive) {
       firstFrameCaptured = false;
-      currentYaw = 0;
-      currentPitch = 0;
       
-      // Пытаемся подключиться к плееру
-      attachGyroToMarzipano();
+      // Отключаем стандартный контроль (мышку/тач), чтобы они не конфликтовали с гироскопом
+      viewer.controls().disable();
 
       window.addEventListener('deviceorientation', handleOrientation, true);
       gyroBtn.innerHTML = '🛑 Выключить гироскоп';
       gyroBtn.style.backgroundColor = 'rgba(220, 53, 69, 0.8)';
     } else {
       window.removeEventListener('deviceorientation', handleOrientation, true);
+      
+      // Возвращаем мышку и тач обратно при выключении
+      viewer.controls().enable();
+
       gyroBtn.innerHTML = '🧭 Включить гироскоп';
       gyroBtn.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
     }
   }
 
-  // 6. Запрос разрешений для iOS 13+ и запуск
+  // 5. Запрос разрешений для мобильных устройств
   function enableGyroscope() {
     if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
       DeviceOrientationEvent.requestPermission()
@@ -156,10 +136,13 @@
           if (permissionState === 'granted') {
             toggleGyroState();
           } else {
-            alert('Доступ к гироскопу отклонен браузером.');
+            alert('Доступ к гироскопу отклонен вашим браузером.');
           }
         })
-        .catch(console.error);
+        .catch(err => {
+          console.error(err);
+          alert('Ошибка запроса гироскопа: ' + err);
+        });
     } else {
       toggleGyroState();
     }
