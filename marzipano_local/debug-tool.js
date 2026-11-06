@@ -1,7 +1,7 @@
 // ==========================================================
 // АВТОНОМНЫЙ ИНСТРУМЕНТ ОТЛАДКИ И ГИРОСКОПА С КНОПКОЙ УПРАВЛЕНИЯ
 // ==========================================================
-var DEBUG_MODE = false;  // true - прицел и координаты на ПК включены, false - выключены
+var DEBUG_MODE = true;  // true - прицел и координаты на ПК включены, false - выключены
 var ENABLE_GYRO = true; // true - активировать модуль гироскопа для смартфонов
 
 (function() {
@@ -76,59 +76,52 @@ var ENABLE_GYRO = true; // true - активировать модуль гиро
     }, true);
   }
 
-  // Нативный контроллер гироскопа для Marzipano с кнопкой ВКЛ/ВЫКЛ
-  def initLocalGyroscope(marzipanoViewer, container) {
+  // ИСПРАВЛЕНО: Заменен некорректный 'def' на правильный JS-синтаксис 'function'
+  function initLocalGyroscope(marzipanoViewer, container) {
     var deviceOrientationSupported = typeof window.DeviceOrientationEvent !== 'undefined';
     if (!deviceOrientationSupported) return;
 
-    // Проверяем, мобильное ли это устройство, чтобы не вешать кнопку на десктоп
-    var isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-    if (!isMobile) return;
-
-    // Внедряем стили кнопки гироскопа в верхний правый угол
+    // Внедряем стили кнопки гироскопа СТРОГО ПО ЦЕНТРУ ЭКРАНА для теста
     var gyroStyle = document.createElement('style');
     gyroStyle.innerHTML = `
       #gyro-toggle-btn {
         position: absolute;
-        top: 20px;
-        right: 20px;
-        width: 45px;
-        height: 45px;
-        background: rgba(0, 0, 0, 0.6);
-        border: 2px solid rgba(255, 255, 255, 0.7);
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 70px;
+        height: 70px;
+        background: rgba(255, 0, 0, 0.8); /* Сделали её КРАСНОЙ и крупной, чтоб точно заметить */
+        border: 3px solid #fff;
         border-radius: 50%;
         color: #fff;
-        font-size: 20px;
+        font-size: 30px;
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        z-index: 10000;
+        z-index: 10001;
         transition: all 0.3s ease;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.5);
       }
       #gyro-toggle-btn.active {
-        background: #00ff00;
-        border-color: #fff;
-        color: #000;
-        box-shadow: 0 0 15px rgba(0, 255, 0, 0.6);
+        background: #00ff00; /* При включении горит ЗЕЛЕНЫМ */
+        box-shadow: 0 0 25px rgba(0, 255, 0, 0.8);
       }
     `;
     document.head.appendChild(gyroStyle);
 
-    // Создаем саму кнопку (используем смайлик компаса/телефона в качестве иконки)
     var gyroBtn = document.createElement('div');
     gyroBtn.id = 'gyro-toggle-btn';
-    gyroBtn.innerHTML = '🧭'; // Иконка выключенного гироскопа
+    gyroBtn.innerHTML = '🧭'; 
     container.appendChild(gyroBtn);
 
     var gyroActive = false;
     var isRunning = false;
     var lastAlpha = null, lastBeta = null, lastGamma = null;
 
-    // Математика обработки поворотов датчиков
     function handleOrientation(event) {
-      if (!gyroActive) return; // Если гироскоп выключен кнопкой, полностью игнорируем датчики
+      if (!gyroActive) return;
 
       var view = marzipanoViewer.view();
       if (!view) return;
@@ -158,42 +151,37 @@ var ENABLE_GYRO = true; // true - активировать модуль гиро
         deltaPitch = (gamma - lastGamma) * Math.PI / 180;
       }
 
-      // Применяем вращение камеры
-      view.setYaw(view.yaw() - deltaYaw * 0.45);
-      view.setPitch(view.pitch() - deltaPitch * 0.45);
+      // ИСПРАВЛЕНО: Установлена честная скорость 1.0 (повторяет движения рук)
+      view.setYaw(view.yaw() - deltaYaw * 1.0);
+      view.setPitch(view.pitch() - deltaPitch * 1.0);
 
       lastAlpha = alpha;
       lastBeta = beta;
       lastGamma = gamma;
     }
 
-    // Включение прослушивания системных событий телефона
     function turnOnGyro() {
       gyroActive = true;
-      isRunning = false; // Сбрасываем флаг, чтобы при повторном включении камера не прыгала
+      isRunning = false; 
       gyroBtn.classList.add('active');
-      gyroBtn.innerHTML = '📱'; // Меняем иконку на активный телефон
+      gyroBtn.innerHTML = '📱'; 
       window.addEventListener('deviceorientation', handleOrientation, true);
     }
 
-    // Полное отключение прослушивания датчиков
     function turnOffGyro() {
       gyroActive = false;
       gyroBtn.classList.remove('active');
-      gyroBtn.innerHTML = '🧭'; // Возвращаем компас
+      gyroBtn.innerHTML = '🧭'; 
       window.removeEventListener('deviceorientation', handleOrientation, true);
     }
 
-    // Логика нажатия на кнопку управления гироскопом
     gyroBtn.addEventListener('click', function(e) {
-      e.stopPropagation(); // Защита от случайного клика по панораме под кнопкой
+      e.stopPropagation(); 
 
       if (gyroActive) {
-        // ЕСЛИ ВКЛЮЧЕН — ВЫКЛЮЧАЕМ
         turnOffGyro();
-        console.log("[DebugTool] Гироскоп выключен пользователем.");
+        console.log("[DebugTool] Гироскоп выключен.");
       } else {
-        // ЕСЛИ ВЫКЛЮЧЕН — ЗАПРАШИВАЕМ ДОСТУП И ВКЛЮЧАЕМ
         if (typeof DeviceOrientationEvent.requestPermission === 'function') {
           DeviceOrientationEvent.requestPermission()
             .then(function(state) {
@@ -203,7 +191,7 @@ var ENABLE_GYRO = true; // true - активировать модуль гиро
         } else {
           turnOnGyro();
         }
-        console.log("[DebugTool] Гироскоп включен пользователем.");
+        console.log("[DebugTool] Гироскоп включен.");
       }
     });
   }
