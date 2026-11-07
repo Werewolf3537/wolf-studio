@@ -1042,13 +1042,27 @@ body.fullscreen-enabled .custom-wolf-link {
 
 
 
-			/* НАСТРАИВАЕМ СТИЛЬ МИНИ-КАРТЫ */
-/* 1. Кнопка «Карта» в левом нижнем углу (наш фирменный стиль) */
+/* ==========================================================================
+   НАСТРОЙКИ МАСШТАБА МИНИ-КАРТЫ (МЕНЯЙТЕ ЗНАЧЕНИЯ ТУТ)
+   ========================================================================== */
+:root {
+  /* ПРОЦЕНТ ОТ ЭКРАНА ДЛЯ ПК */
+  --map-width-desktop: 20vw;  /* <--- Изменяйте этот процент для компьютеров */
+
+  /* ПРОЦЕНТ ОТ ЭКРАНА ДЛЯ ТЕЛЕФОНОВ */
+  --map-width-mobile: 50vw;   /* <--- Изменяйте этот процент для смартфонов */
+}
+
+/* ==========================================================================
+   КОД МИНИ-КАРТЫ
+   ========================================================================== */
+
+/* 1. Кнопка «Карта» в левом нижнем углу */
 .map-open-button {
   position: absolute !important;
   bottom: 20px !important;
   left: 20px !important;
-  z-index: 1001 !important; /* Чуть выше карты, чтобы всегда нажиматься */
+  z-index: 1001 !important;
   background-color: rgba(20, 25, 35, 0.6) !important;
   color: #ffffff !important;
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
@@ -1066,14 +1080,13 @@ body.fullscreen-enabled .custom-wolf-link {
   background-color: rgb(103, 115, 131) !important;
 }
 
-/* Класс скрытия для кнопки */
 .map-open-button.hidden-state {
   opacity: 0 !important;
   visibility: hidden !important;
   pointer-events: none !important;
 }
 
-/* 2. Контейнер мини-карты (Изначально СКРЫТ через opacity и visibility) */
+/* 2. Контейнер мини-карты */
 #mini-map-wrapper {
   position: absolute !important;
   bottom: 20px !important;
@@ -1081,38 +1094,38 @@ body.fullscreen-enabled .custom-wolf-link {
   z-index: 1000 !important;
   height: auto !important;
   pointer-events: none !important;
-  
-  /* Начальное скрытое состояние для анимации плавного разворачивания */
   opacity: 0 !important;
   visibility: hidden !important;
   transition: opacity 0.2s ease-in-out, visibility 0.2s !important;
+
+  /* 
+    ВКЛЮЧАЕМ ОТСЛЕЖИВАНИЕ РАЗМЕРА КОНТЕЙНЕРА:
+    Это позволяет вложенной точке и лучу точно знать ширину карты 
+    через специальную единицу измерения cqw (1 cqw = 1% от ширины карты)
+  */
+  container-type: inline-size !important;
 }
 
-/* Настройки адаптивной ширины в процентах от экрана (vw) */
+/* Применение адаптивного масштаба с защитой от вылета за экран */
 @media (min-width: 769px) {
   #mini-map-wrapper {
-    width: 25vw !important;    /* На ПК карта займет 25% от ширины окна */
-    min-width: 350px !important; /* Меньше 350px на ноутбуках не сожмется */
-    max-width: 500px !important; /* Больше 500px на огромных мониторах не станет */
+    width: clamp(250px, var(--map-width-desktop), 85vw) !important;
   }
 }
 
 @media (max-width: 768px) {
   #mini-map-wrapper {
-    width: 88vw !important;    /* На смартфонах карта займет 88% от ширины экрана */
-    min-width: 160px !important; /* Минимальный порог для маленьких экранов */
-    max-width: 220px !important; /* Ограничение для больших телефонов */
+    width: clamp(140px, var(--map-width-mobile), 85vw) !important;
   }
 }
 
-/* Класс АКТИВАЦИИ карты по клику */
 #mini-map-wrapper.active-state {
   opacity: 1 !important;
   visibility: visible !important;
-  pointer-events: auto !important; /* Разрешаем кликать на крестик */
+  pointer-events: auto !important;
 }
 
-/* 3. Кнопка-крестик закрытия внутри карты */
+/* 3. Кнопка-крестик закрытия */
 #mini-map-close-btn {
   position: absolute !important;
   top: -10px !important;
@@ -1132,7 +1145,7 @@ body.fullscreen-enabled .custom-wolf-link {
 }
 
 #mini-map-close-btn:hover {
-  background-color: #ff3333 !important; /* Крестик краснеет при наведении */
+  background-color: #ff3333 !important;
 }
 
 /* 4. Картинка планировки */
@@ -1143,30 +1156,51 @@ body.fullscreen-enabled .custom-wolf-link {
   filter: drop-shadow(0 4px 10px rgba(0,0,0,0.5)) !important; 
 }
 
-/* 5. Красный маркер местонахождения */
+/* 5. Красный маркер местонахождения (ПРОПОРЦИОНАЛЬНЫЙ ЧЕРЕЗ cqw) */
 #mini-map-dot {
   position: absolute !important;
-  width: 12px !important;
-  height: 12px !important;
+  
+  /* Размер точки теперь составляет ровно 4.5% от ТЕКУЩЕЙ ширины карты */
+  width: 4.5cqw !important;
+  height: 4.5cqw !important;
+  
   background-color: #ff3333 !important;
-  border: 2px solid #ffffff !important;
+  
+  /* Толщина рамки тоже плавно масштабируется вместе с картой */
+  border: 0.6cqw solid #ffffff !important; 
   border-radius: 50% !important;
   box-shadow: 0 0 8px rgba(255, 51, 51, 0.8) !important;
   z-index: 100 !important;
   transition: opacity 0.2s ease-in-out !important;
+
+  /* 
+    Динамический маргин: сдвигаем точку на половину её же ширины,
+    чтобы центрировать её без использования свойства transform!
+  */
+  margin-left: -2.25cqw !important;
+  margin-top: -2.25cqw !important;
 }
 
-/* Белый луч-радар */
+/* Белый луч-радар (ПРОПОРЦИОНАЛЬНЫЙ ЧЕРЕЗ cqw) */
 #mini-map-dot::before {
   content: '' !important;
   position: absolute !important;
+  
+  /* Идеально позиционируем начало луча по центру нашей cqw-точки */
   top: 50% !important; 
   left: 50% !important;
-  width: 50px !important;   
-  height: 60px !important;  
+  
+  /* Размеры луча теперь жестко привязаны к ширине карты */
+  width: 16cqw !important;   /* Длина и ширина луча будут автоматически */
+  height: 20cqw !important;  /* уменьшаться/расти вслед за картой */
+  
+  /* Точка вращения — верхний центр луча (transform остается свободным для JS) */
   transform-origin: top center !important;
   transform: translate(-50%, 0) !important; 
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0) 100%) !important;
+  
+  /* === ИСПРАВЛЕННАЯ СТРОКА: Плотное начало луча без прозрачности === */
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 20%, rgba(255, 255, 255, 0) 100%) !important;
+  
   clip-path: polygon(50% 0%, 0% 100%, 100% 100%) !important;
   z-index: -1 !important;
 }
