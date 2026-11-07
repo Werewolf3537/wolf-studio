@@ -870,14 +870,19 @@ body.view-control-buttons .viewControlButton {
 
 
 
-/* НАСТРОЙКА НАШЕЙ НОВОЙ ИКОНКИ-ССЫЛКИ WOLF STUDIO В СТИЛЕ ВЕРХНЕЙ ПАНЕЛИ */
 
-/* Прячем штатную кнопку, полностью убирая её визуально и физически */
+
+
+/* ==========================================================================
+   ПОЛНЫЙ КОД ДЛЯ ТРЁХСЛОЙНОЙ КНОПКИ WOLF STUDIO (РАЗМЕР, ВРАЩЕНИЕ И ПОДСКАЗКА)
+   ========================================================================== */
+
+/* 1. НАГЛУХО ПРЯЧЕМ СТАРЫЙ АВТОРОТЭЙТ */
 #autorotateToggle {
   display: none !important;
 }
 
-/* Оформляем новую кнопку в фирменном стиле верхней панели */
+/* 2. КОНТЕЙНЕР КНОПКИ: идеальные штатные размеры и цвет вашей панели */
 .custom-wolf-link {
   display: block !important;
   position: absolute !important;
@@ -886,39 +891,46 @@ body.view-control-buttons .viewControlButton {
   width: 40px !important;
   height: 40px !important;
   padding: 5px !important;
-  
-  /* ИСПОЛЬЗУЕМ ФОН ВЕРХНЕЙ ПАНЕЛИ ИЗ ВАШЕГО CSS */
-  background-color: rgb(20, 25, 35) !important; /* Сплошной темный подстраховочный цвет */
-  background-color: rgba(20, 25, 35, 0.6) !important; /* Полупрозрачный стиль */
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important; /* Нижняя аккуратная рамка */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
-  
   z-index: 100 !important;
   cursor: pointer !important;
-  transition: background-color 0.2s ease-in-out !important;
+  overflow: hidden !important; /* Чтобы элементы не вылезали за рамки 40х40 */
+  
+  background-color: rgb(20, 25, 35) !important;
+  background-color: rgba(20, 25, 35, 0.6) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
 }
 
-/* Эффект легкого изменения фона при наведении */
-.no-touch .custom-wolf-link:hover {
-  background-color: rgba(20, 25, 35, 0.8) !important; /* Становится чуть плотнее */
-}
-
-/* Если включен полноэкранный режим, смещаем иконку левее */
+/* Смещение кнопки влево, если на экране активен полноэкранный режим */
 body.fullscreen-enabled .custom-wolf-link {
   right: 40px !important;
 }
 
-/* Адаптив под мобильные устройства */
-.mobile .custom-wolf-link {
-  width: 50px !important;
-  height: 50px !important;
+/* 3. СЛОЙ 1: ФОНОВЫЙ КРУГ (УВЕЛИЧЕННЫЙ И ОТЦЕНТРИРОВАННЫЙ) */
+.custom-wolf-link .wolf-bg-circle {
+  position: absolute !important;
+  top: 2px !important;   /* Отступ 2px для точного центра */
+  right: 2px !important;  /* Отступ 2px для точного центра */
+  width: 36px !important;  /* Увеличенный размер круга */
+  height: 36px !important; /* Увеличенный размер круга */
+  object-fit: contain !important;
+  z-index: 1 !important;   /* Находится на самом нижнем слое внутри кнопки */
+  
+  /* Бесконечное равномерное вращение за 4 секунды */
+  animation: wolfSpinner 4s linear infinite !important;
 }
 
-body.fullscreen-enabled.mobile .custom-wolf-link {
-  right: 50px !important;
+/* Анимация плавного вращения круга по кругу */
+@keyframes wolfSpinner {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
-/* Стили самой картинки-иконки внутри контейнера */
+/* 4. СЛОЙ 2: СТАТИЧНАЯ ИКОНКА САЙТА (ПОВЕРХ ВРАЩАЮЩЕГОСЯ КРУГА) */
 .custom-wolf-link .wolf-icon-img {
   position: absolute !important;
   top: 5px !important;
@@ -926,79 +938,85 @@ body.fullscreen-enabled.mobile .custom-wolf-link {
   width: 30px !important;
   height: 30px !important;
   object-fit: contain !important;
+  z-index: 2 !important;   /* Встает строго поверх круга */
   transition: transform 0.2s ease-in-out !important;
 }
 
-/* Увеличение иконки на мобильных */
-.mobile .custom-wolf-link .wolf-icon-img {
-  top: 10px !important;
-  right: 10px !important;
-}
-
-/* Эффект при наведении (плавно увеличиваем иконку внутри на 15%) */
+/* Эффект наведения: плавно увеличиваем иконку сайта на 15%, как ваши стрелочки */
 .no-touch .custom-wolf-link:hover .wolf-icon-img {
   transform: scale(1.15) !important;
 }
 
-
-
-
-
-
-
-
-
-				/* СТИЛЬ КОНТЕЙНЕРА ПОД ССЫЛКУ НА САЙТ */
-/* 1. Главный контейнер выстраивает элементы по правому краю */
-.portfolio-brand-block {
+/* 5. СЛОЙ 3: ВСПЛЫВАЮЩАЯ ПОДСКАЗКА (МГНОВЕННОЕ ПОЯВЛЕНИЕ) */
+.custom-wolf-link .wolf-tooltip {
   position: absolute !important;
-  bottom: 20px !important;
-  right: 20px !important;
-  z-index: 1000 !important;
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: flex-end !important;
-  gap: 1px !important; /* УМЕНЬШИЛИ ЗАЗОР: логотип стал чуть ниже и ближе к тексту */
-  pointer-events: none !important;
-}
-
-/* 2. Настраиваем компактный логотип 55px */
-.portfolio-logo {
-  width: 55px !important;  /* Установили размер 55px */
-  height: 55px !important; /* Установили размер 55px */
-  object-fit: contain !important;
-  pointer-events: auto !important;
-  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.4)) !important;
-}
-
-/* 3. Рамка с текстом по правому краю */
-.portfolio-link-wrapper {
-  display: block !important;
-  text-align: right !important;
+  top: 45px !important; /* Появляется ровно под кнопкой */
+  right: 5px !important;
+  
+  /* Фирменный темный стиль плашки */
+  background-color: rgba(20, 25, 35, 0.9) !important; 
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
+  padding: 5px 10px !important;
+  border-radius: 4px !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3) !important;
   
   font-family: sans-serif !important;
-  font-size: 14px !important;
-  color: #ffffff !important;
-  background-color: rgba(20, 25, 35, 0.6) !important;
-  padding: 8px 15px !important;
-  border-radius: 4px !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3) !important;
-  pointer-events: auto !important;
+  font-size: 13px !important;
+  white-space: nowrap !important;
+  pointer-events: none !important; /* Не мешает кликать по кнопке */
+  
+  /* Изначально полностью скрыта */
+  opacity: 0 !important;
+  visibility: hidden !important;
+  
+  /* Без transition и без transform — для абсолютно резкого и мгновенного появления */
 }
 
-/* Ссылка внутри рамки */
-.portfolio-link-wrapper a {
-  color: #007bff !important;
-  text-decoration: none !important;
-  font-weight: bold !important;
-  transition: color 0.2s ease-in-out !important;
+/* Включение видимости подсказки строго при наведении мыши */
+.no-touch .custom-wolf-link:hover .wolf-tooltip {
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
-.portfolio-link-wrapper a:hover {
-  color: #ffffff !important;
-  text-decoration: underline !important;
+/* ==========================================================================
+   6. АДАПТИВНАЯ МОБИЛЬНАЯ ВЕРСИЯ (КНОПКА УВЕЛИЧИВАЕТСЯ ДО 50px)
+   ========================================================================== */
+@media (max-width: 768px) or (.mobile) {
+  /* Увеличиваем сам контейнер кнопки */
+  .mobile .custom-wolf-link {
+    width: 50px !important;
+    height: 50px !important;
+  }
+  
+  /* Смещение увеличенной кнопки в полноэкранном режиме на мобильных */
+  body.fullscreen-enabled.mobile .custom-wolf-link {
+    right: 50px !important;
+  }
+  
+  /* Пропорционально увеличиваем фоновый круг на мобильных (до 44px) */
+  .mobile .custom-wolf-link .wolf-bg-circle {
+    top: 3px !important;
+    right: 3px !important;
+    width: 44px !important;
+    height: 44px !important;
+  }
+  
+  /* Позиционируем иконку сайта на мобильных */
+  .mobile .custom-wolf-link .wolf-icon-img {
+    top: 10px !important;
+    right: 10px !important;
+  }
+  
+  /* Сдвигаем подсказку чуть ниже, так как кнопка стала выше */
+  .mobile .custom-wolf-link .wolf-tooltip {
+    top: 55px !important;
+  }
 }
+
+
+
+
 
 
 
