@@ -27,7 +27,6 @@
 <div id="sceneList">
   <ul class="scenes">
     
-  <!-- SCENES_START -->
 
       <!-- Ресторан Тесто-Место -->
       <a href="https://wolf-studio.ru/testo-mesto" class="scene">
@@ -54,7 +53,7 @@
         <li class="text">Квартира 2-к 50м2 г.Новокузнецк ЖК "Кузнецова"</li>
       </a>
 
-  <!-- SCENES_END -->
+
 
   </ul>
 </div>
@@ -63,10 +62,17 @@
   <h1 class="sceneName"></h1>
 </div>
 
-<a href="javascript:void(0)" id="autorotateToggle">
-  <img class="icon off" src="img/play.png">
-  <img class="icon on" src="img/pause.png">
+<!-- Старая кнопка autorotate (скрыта и не кликается) -->
+<a href="javascript:void(0)" class="icon" id="autorotateToggle" style="display: none !important;">
+  <img class="icon-on" src="img/autorotate-on.png">
+  <img class="icon-off" src="img/autorotate-off.png">
 </a>
+
+<!-- Новая кнопка с сайтом на её месте -->
+<a href="https://wolf-studio.ru" target="_blank" class="custom-wolf-link" title="Wolf Studio">
+  <img class="wolf-icon-img" src="img/site.png" alt="Wolf Studio">
+</a>
+
 
 <a href="javascript:void(0)" id="fullscreenToggle">
   <img class="icon off" src="img/fullscreen.png">
@@ -129,6 +135,7 @@
 
 <script src="data.js"></script>
 <script src="index.js"></script>
+<script src="debug-tool.js"></script>
 
 </body>
 </html>
