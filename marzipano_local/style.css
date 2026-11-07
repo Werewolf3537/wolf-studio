@@ -1099,7 +1099,7 @@ body.fullscreen-enabled .custom-wolf-link {
 
 @media (max-width: 768px) {
   #mini-map-wrapper {
-    width: 70vw !important;    /* На смартфонах карта займет 45% от ширины экрана */
+    width: 88vw !important;    /* На смартфонах карта займет 88% от ширины экрана */
     min-width: 160px !important; /* Минимальный порог для маленьких экранов */
     max-width: 220px !important; /* Ограничение для больших телефонов */
   }
