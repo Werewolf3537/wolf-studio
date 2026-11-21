@@ -65,6 +65,51 @@
     <main class="dev-main-content">
 
 
+<!-- ИНТЕРАКТИВНЫЙ 3D-ТУР -->
+<section id="wolf-tour-showcase" style="background: #0b0d10; padding: 20px;">
+    <div id="wolf-tour-frame-wrap" style="position: relative; width: 100%; max-width: 1400px; height: 75vh; min-height: 480px; margin: 0 auto; border-radius: 12px; overflow: hidden; box-shadow: 0 12px 35px rgba(0,0,0,0.55); border: 1px solid #1a2026;">
+        <iframe
+            id="wolf-tour-iframe"
+            src="https://other.wolf-studio.ru/wolftour"
+            title="Интерактивный 3D-тур ЖК Маяковский"
+            style="width: 100%; height: 100%; border: 0; display: block;"
+            allow="fullscreen; accelerometer; gyroscope; magnetometer"
+            allowfullscreen
+            loading="lazy">
+        </iframe>
+    </div>
+</section>
+
+<style>
+  #wolf-tour-frame-wrap.is-pseudo-fullscreen {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100vw !important;
+    height: 100dvh !important;
+    max-width: none !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    border: 0 !important;
+    z-index: 999999 !important;
+  }
+  @media (max-width: 768px) {
+    #wolf-tour-showcase { padding: 10px !important; }
+    #wolf-tour-frame-wrap { height: 65vh !important; min-height: 380px !important; }
+  }
+</style>
+
+<script>
+  window.addEventListener('message', function(e) {
+    if (e.data && e.data.type === 'wolftour:fullscreen') {
+      var wrap = document.getElementById('wolf-tour-frame-wrap');
+      if (wrap) {
+        wrap.classList.toggle('is-pseudo-fullscreen', Boolean(e.data.active));
+        document.body.style.overflow = e.data.active ? 'hidden' : '';
+      }
+    }
+  });
+</script>
 
 
 <!-- Главный экран страницы для застройщиков с фоновой картинкой и затемнением 60% -->
